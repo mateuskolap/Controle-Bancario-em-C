@@ -11,6 +11,10 @@ typedef struct _linkedList {
     SNode *tail;
 } LinkedList;
 
+/**
+ * @brief cria um nó de uma lista simplesmente encadeada
+ * @param value:
+ */
 SNode *Snode_create(int value) {
     SNode *snode = (SNode *) calloc(1, sizeof(SNode));
 
@@ -20,6 +24,9 @@ SNode *Snode_create(int value) {
     return snode;
 }
 
+/**
+ * @brief cria a lista simplesmente encadeada
+ */
 LinkedList *LinkedList_create() {
     LinkedList *L = (LinkedList *) calloc(1, sizeof(LinkedList));
 
@@ -29,6 +36,11 @@ LinkedList *LinkedList_create() {
     return L;
 }
 
+/**
+ * @brief adiciona um nó ao inicio da lista
+ * @param *L :passa uma lista como parametro para ser adicionado 
+ * @param value:  
+ */
 void LinkedList_add_first(LinkedList *L, int value) {
     SNode *p = Snode_create(value);
     p->next = L->head;
