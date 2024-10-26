@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "../include/linked_list.h"
 
 // Estrutura que armazenará as informações da conta bancária
@@ -19,9 +20,11 @@ typedef struct _snode {
     struct _snode *next;
 } SNode;
 
+// Estrutura da lista simplesmente encadeada
 typedef struct _linkedList {
     SNode *head;
     SNode *tail;
+    int size;
 } LinkedList;
 
 /**
@@ -33,6 +36,7 @@ LinkedList *LinkedList_account_create() {
 
     L->head = NULL;
     L->tail = NULL;
+    L->size = 0;
 
     return L;
 }
@@ -52,6 +56,13 @@ SNode *SNode_account_create(bank_account content) {
     return snode;
 }
 
+// Verifica se a lista está vazia
+bool LinkedList_account_is_empty(const LinkedList *L) {
+    return (L->head == NULL && L->tail == NULL);
+}
+
+/******************* FUNÇÕES DE INSERÇÃO NA LISTA *******************/
+
 /**
  * @brief Adiciona um nó ao início da lista
  * @param L: Endereço de memória da lista
@@ -61,13 +72,16 @@ void LinkedList_account_add_first(LinkedList *L, bank_account content) {
     // Cria um novo nó com o conteúdo desejado
     SNode *p = SNode_account_create(content);
 
-    p->next = L->head; // Agora, o campo "next" do ponteiro, apontará para o primeiro nó da lista.
-    L->head = p; // A cabeça da lista passa a ser o novo elemento inserido.
+    p->next = L->head; // O ponteiro próximo do novo nó apontará para o primeiro nó da lista
 
-    // Se não houver um novo elemento no final da lista, a cauda 
-    if (L->tail == NULL) {
+    // Verifica se a lista está vazia
+    if (LinkedList_account_is_empty(L)) {
         L->tail = p;
-    }
+    } 
+
+    L->head = p; // A cabeça da lista será alterada para guardar o novo nó   
+
+    L->size++; 
 }
 
 /**
@@ -80,7 +94,7 @@ void LinkedList_account_add_last(LinkedList *L, bank_account content) {
     SNode *p = SNode_account_create(content);
 
     // Se a lista estiver vazia
-    if (L->head == NULL) {
+    if (LinkedList_account_is_empty(L)) {
         L->head = p;
     // Se a lista não estiver vazia
     } else {        
@@ -88,4 +102,59 @@ void LinkedList_account_add_last(LinkedList *L, bank_account content) {
     }
 
     L->tail = p;
+    L->size++; 
 }
+
+/**
+ * @brief Adiciona um nó em uma determinada posição da lista
+ * @param L: Endereço de memória da lista
+ * @param content: valor da conta bancária a ser armazenado no novo nó
+ * @param position: posicção na qual deverá ser inserido o novo nó
+ */
+void LinkedList_account_add_at_position(LinkedList *L, bank_account content, int position) {
+
+    // Verificando se a posição desejada existe.
+    if ((position < 1) || (position > L->size + 1)) {
+        fprintf(stderr, "ERROR in 'LinkedList_account_add_at_position'\n");
+        fprintf(stderr, "Position [%d] is out of bounds: [1, %d]\n", position, L->size);
+        exit(EXIT_FAILURE);
+    }
+
+    SNode *p = SNode_account_create(content);
+ 
+    // Se a inserção for na primeira posição
+    if (position == 1) {
+        LinkedList_account_add_first(L, content);
+        return;
+    } 
+
+    SNode *current = L->head;
+    SNode *previous = NULL;
+
+    // Percorre os elementos da lista até a posição desejada
+    for (int count = 1; (current != NULL) && (count < position); count++) {
+        previous = current; // Armazena o elemento anterior
+        current = current->next; // Armazena o próximo elemento
+    }
+
+    // Insere o valor do próximo elemento em "p"
+    p->next = current;
+    
+    // Se o nó anterior não for nulo, ele deve apontar para o novo elemento
+    if (previous != NULL) {
+        previous->next = p;
+    }
+
+    // Se a inserção for no final da lista, o novo elemento deve estar presente no campo "tail"
+    if (current == NULL) {
+        L->tail = p;
+    }
+
+    L->size++; 
+}
+
+/*******************************************************************/
+
+/******************* FUNÇÕES DE REMOÇÃO NA LISTA *******************/
+
+/*******************************************************************/

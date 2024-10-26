@@ -10,10 +10,9 @@ void gotoxy (int x, int y) {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void screen ()
-{
-    for(int i = 0; i < 80; i++)
-    {
+void screen() {
+
+    for(int i = 0; i < 80; i++) {
         gotoxy(i, 0);
         printf("=");
         gotoxy(i, 3);
@@ -24,8 +23,7 @@ void screen ()
         printf("=");
     }
 
-    for (int i = 0; i < 25; i++)
-    {
+    for (int i = 0; i < 25; i++) {
         gotoxy(0, i);
         printf("|");
         gotoxy(80, i);
@@ -59,7 +57,7 @@ void screen ()
     printf("Mateus kolapouski");
 }
 
-void main_menu() {
+void main_menu () {
 
     gotoxy(27,10);
     printf("1. Cadastro de Contas");
