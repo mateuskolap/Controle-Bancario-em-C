@@ -12,8 +12,6 @@ int main() {
     int opc;
 
     do{
-    
-
         screen();
         main_menu();
 
@@ -31,13 +29,10 @@ int main() {
             system("cls");
             screen();
             Financial_Transaction();
-
         default:
             break;
         }
-    } while (opc !=3);
-
-    
+    } while (opc != 3);
 
     return 0;
 }

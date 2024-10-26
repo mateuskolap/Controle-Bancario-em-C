@@ -1,9 +1,21 @@
 #include <stdlib.h>
-#include "../include/structs.h"
 #include "../include/linked_list.h"
 
+// Estrutura que armazenará as informações da conta bancária
+typedef struct _bank_account {
+    int codigo_conta;
+    char banco[50];
+    char agencia[10];
+    char numero_conta[20];
+    char tipo_conta[20];
+    double vl_saldo;
+    double vl_limite;
+    char status[10];
+} bank_account;
+
+// Nó que armazenará o conteúdo da estrutura de contas bancárias e um ponteiro para o próximo nó
 typedef struct _snode {
-    bank_account value;
+    bank_account content; // Conteúdo
     struct _snode *next;
 } SNode;
 
@@ -34,7 +46,7 @@ SNode *SNode_account_create(bank_account content) {
     // Aloca um espaço na memória heap para armazenar um novo nó
     SNode *snode = (SNode *) calloc(1, sizeof(SNode));
 
-    snode->value = content;
+    snode->content = content;
     snode->next = NULL;
 
     return snode;

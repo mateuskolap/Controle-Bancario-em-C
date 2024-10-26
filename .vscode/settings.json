@@ -58,6 +58,7 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
     "structs.h": "c",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "linked_list.h": "c"
   }
 }
