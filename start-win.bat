@@ -16,7 +16,6 @@ gcc -Wall -Wextra -Wpedantic !SRC_FILES! -o bin\main.exe
 
 REM Verifica o sistema operacional e executa o programa
 if "%OS%" == "Windows_NT" (
-    echo Executando no Windows...
     bin\main.exe
     pause
 ) else (
