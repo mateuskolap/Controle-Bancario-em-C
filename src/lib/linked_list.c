@@ -1,6 +1,19 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "../include/linked_list.h"
+
+// Estrutura que armazenará as movimentações bancárias
+typedef struct _bank_transaction {
+    int sequencial;
+    int codigo_conta;
+    char data_movimento[11];
+    char tp_movimentacao[15];
+    double vl_movimento;
+    double vl_saldo;
+} bank_transaction;
+
+
 
 // Estrutura que armazenará as informações da conta bancária
 typedef struct _bank_account {
@@ -112,12 +125,11 @@ void LinkedList_account_add_last(LinkedList *L, bank_account content) {
  * @param position: posicção na qual deverá ser inserido o novo nó
  */
 void LinkedList_account_add_at_position(LinkedList *L, bank_account content, int position) {
-
     // Verificando se a posição desejada existe.
     if ((position < 1) || (position > L->size + 1)) {
         fprintf(stderr, "ERROR in 'LinkedList_account_add_at_position'\n");
         fprintf(stderr, "Position [%d] is out of bounds: [1, %d]\n", position, L->size);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     SNode *p = SNode_account_create(content);
@@ -156,5 +168,90 @@ void LinkedList_account_add_at_position(LinkedList *L, bank_account content, int
 /*******************************************************************/
 
 /******************* FUNÇÕES DE REMOÇÃO NA LISTA *******************/
+
+/**
+ * @brief Remove o primeiro nó da lista
+ * @param L: Endereço de memória da lista
+ */
+void LinkedList_account_remove_first(LinkedList *L) {
+    // Retorna um erro se a lista estiver vazia
+    if (LinkedList_account_is_empty(L)) {
+        fprintf(stderr, "ERROR in 'LinkedList_account_remove_first': The list is already empty.\n");
+        return;
+    }
+
+    // Nó temporário que auxiliará na remoção do primeiro elemento
+    SNode *temp = L->head;
+
+    // Se a lista possuir somente um elemento
+    if (L->head == L->tail) {
+        L->tail = NULL;
+    }
+
+    // A cabeça da lista passa a apontar para o segundo elemento
+    L->head = L->head->next;
+    free(temp); // O primeiro nó é desalocado
+
+    L->size--; // Decrementa o tamanho da lista
+}
+
+void LinkedList_account_remove_end(LinkedList *L) {
+    // Retorna um erro se a lista estiver vazia
+    if (LinkedList_account_is_empty(L)) {
+        fprintf(stderr, "ERROR in 'LinkedList_account_remove_first': The list is already empty.\n");
+        return;
+    }
+
+    
+}
+
+/**
+ * @brief Remove um nó em uma determinada posição da lista
+ * @param L: Endereço de memória da lista
+ * @param position: posicção na qual deverá ser removido o nó
+ */
+void LinkedList_account_remove_at_position(LinkedList *L, int position) {
+    // Retorna um erro se a lista estiver vazia
+    if (LinkedList_account_is_empty(L)) {
+        fprintf(stderr, "ERROR in 'LinkedList_account_remove_at_position': The list is already empty.\n");
+        return;
+    }
+
+    // Verificando se a posição desejada existe.
+    if ((position < 1) || (position > L->size)) {
+        fprintf(stderr, "ERROR in 'LinkedList_account_remove_at_position'\n");
+        fprintf(stderr, "Position [%d] is out of bounds: [1, %d]\n", position, L->size);
+        return;
+    }
+
+    // Se for a primeira posição
+    if (position == 1) {
+        LinkedList_account_remove_first(L);
+        return;
+    }
+
+    // Auxiliares para remoção
+    SNode *current = L->head->next;
+    SNode *previous = NULL;
+
+    // Encontra o nó desejado para remover, e o anterior
+    for (int count = 1; (current != NULL) && (count < position); count++) {
+        previous = current;
+        current = current->next;
+    }
+
+    // O próximo nó do anterior, será o próximo nó do atual
+    previous->next = current->next;
+
+    // Se a remoção for na cauda
+    if (current == L->tail) {
+        L->tail = previous;
+    }
+    
+    // O nó é desalocado
+    free(current);
+
+    L->size--; // Decrementa o tamanho da lista
+}
 
 /*******************************************************************/

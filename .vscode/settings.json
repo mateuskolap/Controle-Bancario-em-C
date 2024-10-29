@@ -60,6 +60,7 @@
     "structs.h": "c",
     "stdlib.h": "c",
     "linked_list.h": "c",
-    "stdbool.h": "c"
+    "stdbool.h": "c",
+    "stdio.h": "c"
   }
 }

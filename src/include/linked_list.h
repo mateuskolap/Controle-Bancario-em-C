@@ -1,8 +1,6 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
-#include <stdbool.h>
-
 typedef struct _bank_account bank_account;
 typedef struct _snode SNode;
 typedef struct _linkedList LinkedList;
@@ -24,5 +22,8 @@ void LinkedList_account_add_last(LinkedList *L, bank_account content);
 
 // Adiciona um nó no em uma determinada posição da lista simplesmente encadeada
 void LinkedList_account_add_at_position(LinkedList *L, bank_account content, int position);
+
+// Remove o primeiro nó da lista
+void LinkedList_account_remove_first(LinkedList *L);
 
 #endif // LINKED_LIST_H
