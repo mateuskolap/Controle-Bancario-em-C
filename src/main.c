@@ -3,9 +3,7 @@
 #include <conio.h>
 #include <windows.h>
 #include "include/linked_list.h"
-#include "include/structs.h"
 #include "include/screens.h"
-
 
 int main() {
     

@@ -2,18 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "../include/linked_list.h"
-
-// Estrutura que armazenará as movimentações bancárias
-typedef struct _bank_transaction {
-    int sequencial;
-    int codigo_conta;
-    char data_movimento[11];
-    char tp_movimentacao[15];
-    double vl_movimento;
-    double vl_saldo;
-} bank_transaction;
-
-
+#include "../include/doubly_linked_list.h"
 
 // Estrutura que armazenará as informações da conta bancária
 typedef struct _bank_account {
@@ -25,11 +14,12 @@ typedef struct _bank_account {
     double vl_saldo;
     double vl_limite;
     char status[10];
+    dLinkedList *transacoes;
 } bank_account;
 
 // Nó que armazenará o conteúdo da estrutura de contas bancárias e um ponteiro para o próximo nó
 typedef struct _snode {
-    bank_account content; // Conteúdo
+    bank_account *content; // Conteúdo
     struct _snode *next;
 } SNode;
 
@@ -40,11 +30,14 @@ typedef struct _linkedList {
     int size;
 } LinkedList;
 
+/******************* "CONSTRUTORES" *******************/
+
 /**
  * @brief Cria uma lista simplesmente encadeada
  * @return Ponteiro para a lista criada
  */
 LinkedList *LinkedList_account_create() {
+    // Aloca um espaço na memória heap para armazenar um novo nó
     LinkedList *L = (LinkedList *) calloc(1, sizeof(LinkedList));
 
     L->head = NULL;
@@ -56,10 +49,10 @@ LinkedList *LinkedList_account_create() {
 
 /**
  * @brief Cria um nó de uma lista simplesmente encadeada
- * @param content: valor da conta bancária a ser armazenado no nó
+ * @param content: informações da conta
  * @return Ponteiro para o nó criado
  */
-SNode *SNode_account_create(bank_account content) {
+SNode *SNode_account_create(bank_account *content) {
     // Aloca um espaço na memória heap para armazenar um novo nó
     SNode *snode = (SNode *) calloc(1, sizeof(SNode));
 
@@ -69,9 +62,50 @@ SNode *SNode_account_create(bank_account content) {
     return snode;
 }
 
-// Verifica se a lista está vazia
+/******************* "DESTRUIDORES" *******************/
+
+/**
+ * @brief Destrói um nó e seu conteúdo
+ * @param L_ref: Endereço de memória de um nó
+ */
+void SNode_destroy(SNode **snode_ref) {
+    SNode *snode = *snode_ref;
+
+    free(snode->content);
+    free(snode);
+
+    *snode_ref = NULL;
+}
+
+/**
+ * @brief Destrói todos os elementos da lista simplesmente encadeada.
+ * @param L_ref: Endereço de memória da lista
+ */
+void LinkedList_destroy(LinkedList **L_ref) {
+    LinkedList *L = *L_ref;
+
+    SNode *current = L->head;
+    SNode *aux = NULL;
+
+    while (current != NULL) {
+        aux = current;
+        current = current->next;
+
+        SNode_destroy(&aux);
+    }
+
+    free(L);
+    *L_ref = NULL;
+}
+
+/******************* FUNÇÕES DE VERIFICAÇÃO NA LISTA *******************/
+
+/**
+ * @brief Verifica se a lista está vazia
+ * @param L_ref: Endereço de memória da lista
+ */
 bool LinkedList_account_is_empty(const LinkedList *L) {
-    return (L->head == NULL && L->tail == NULL);
+    return L->size == 0;
 }
 
 /******************* FUNÇÕES DE INSERÇÃO NA LISTA *******************/
@@ -81,7 +115,7 @@ bool LinkedList_account_is_empty(const LinkedList *L) {
  * @param L: Endereço de memória da lista
  * @param content: valor da conta bancária a ser armazenado no novo nó
  */
-void LinkedList_account_add_first(LinkedList *L, bank_account content) {
+void LinkedList_account_add_first(LinkedList *L, bank_account *content) {
     // Cria um novo nó com o conteúdo desejado
     SNode *p = SNode_account_create(content);
 
@@ -102,7 +136,7 @@ void LinkedList_account_add_first(LinkedList *L, bank_account content) {
  * @param L: Endereço de memória da lista
  * @param content: valor da conta bancária a ser armazenado no novo nó
  */
-void LinkedList_account_add_last(LinkedList *L, bank_account content) {
+void LinkedList_account_add_last(LinkedList *L, bank_account *content) {
     // Cria um novo nó com o conteúdo desejado
     SNode *p = SNode_account_create(content);
 
@@ -124,7 +158,7 @@ void LinkedList_account_add_last(LinkedList *L, bank_account content) {
  * @param content: valor da conta bancária a ser armazenado no novo nó
  * @param position: posicção na qual deverá ser inserido o novo nó
  */
-void LinkedList_account_add_at_position(LinkedList *L, bank_account content, int position) {
+void LinkedList_account_add_at_position(LinkedList *L, bank_account *content, int position) {
     // Verificando se a posição desejada existe.
     if ((position < 1) || (position > L->size + 1)) {
         fprintf(stderr, "ERROR in 'LinkedList_account_add_at_position'\n");
@@ -190,19 +224,46 @@ void LinkedList_account_remove_first(LinkedList *L) {
 
     // A cabeça da lista passa a apontar para o segundo elemento
     L->head = L->head->next;
-    free(temp); // O primeiro nó é desalocado
+    SNode_destroy(&temp); // O primeiro nó é desalocado
 
     L->size--; // Decrementa o tamanho da lista
 }
 
+/**
+ * @brief Remove o último nó da lista
+ * @param L: Endereço de memória da lista
+ */
 void LinkedList_account_remove_end(LinkedList *L) {
     // Retorna um erro se a lista estiver vazia
     if (LinkedList_account_is_empty(L)) {
-        fprintf(stderr, "ERROR in 'LinkedList_account_remove_first': The list is already empty.\n");
+        fprintf(stderr, "ERROR in 'LinkedList_account_remove_end': The list is already empty.\n");
         return;
     }
 
-    
+    // Caso especial para quando a lista possuir somente um elemento
+    if (L->head == L->tail) {
+        free(L->head);
+        L->head = NULL;
+        L->tail = NULL;
+        return;
+    }
+
+    // Auxiliares para remoção
+    SNode *current = L->head->next;
+    SNode *previous = NULL;
+
+    // Encontra o último nó para remover, e o anterior
+    while (current->next != NULL) {
+        previous = current;
+        current = current->next;
+    }
+
+    // Desaloca e reorganiza a lista
+    previous->next = NULL;
+    L->tail = previous;
+    SNode_destroy(&current);
+
+    L->size--;
 }
 
 /**
@@ -231,7 +292,7 @@ void LinkedList_account_remove_at_position(LinkedList *L, int position) {
     }
 
     // Auxiliares para remoção
-    SNode *current = L->head->next;
+    SNode *current = L->head;
     SNode *previous = NULL;
 
     // Encontra o nó desejado para remover, e o anterior
@@ -249,7 +310,7 @@ void LinkedList_account_remove_at_position(LinkedList *L, int position) {
     }
     
     // O nó é desalocado
-    free(current);
+    SNode_destroy(&current);
 
     L->size--; // Decrementa o tamanho da lista
 }
