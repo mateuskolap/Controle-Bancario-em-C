@@ -1,3 +1,9 @@
+/**
+ * 
+ */
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
@@ -10,7 +16,6 @@ int main() {
     int opc;
 
     do{
-        screen();
         main_menu();
 
         gotoxy(7,23);
@@ -19,17 +24,16 @@ int main() {
         switch (opc)
         {
         case 1:
-            system("cls");
-            screen();
             subMenu();
+
             break;
         case 2:
-            system("cls");
-            screen();
             Financial_Transaction();
+            break;
         default:
             break;
         }
+
     } while (opc != 3);
 
     return 0;
