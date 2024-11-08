@@ -71,6 +71,8 @@ SNode *SNode_account_create(bank_account *content) {
 void SNode_destroy(SNode **snode_ref) {
     SNode *snode = *snode_ref;
 
+    dLinkedList_destroy(&snode->content->transacoes);
+
     free(snode->content);
     free(snode);
 
@@ -186,10 +188,7 @@ void LinkedList_account_add_at_position(LinkedList *L, bank_account *content, in
     // Insere o valor do próximo elemento em "p"
     p->next = current;
     
-    // Se o nó anterior não for nulo, ele deve apontar para o novo elemento
-    if (previous != NULL) {
-        previous->next = p;
-    }
+    previous->next = p;
 
     // Se a inserção for no final da lista, o novo elemento deve estar presente no campo "tail"
     if (current == NULL) {
@@ -242,9 +241,10 @@ void LinkedList_account_remove_end(LinkedList *L) {
 
     // Caso especial para quando a lista possuir somente um elemento
     if (L->head == L->tail) {
-        free(L->head);
+        SNode_destroy(&L->head);
         L->head = NULL;
         L->tail = NULL;
+        L->size--;
         return;
     }
 

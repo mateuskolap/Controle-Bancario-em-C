@@ -27,7 +27,6 @@ typedef struct _dLinkedList {
     int size;
 } dLinkedList;
 
-
 /******************* "CONSTRUTORES" *******************/
 
 /**
@@ -35,13 +34,13 @@ typedef struct _dLinkedList {
  * @return Ponteiro para a lista criada
  */
 dLinkedList *dLinkedList_transaction_create() {
-    dLinkedList *T = (dLinkedList *) calloc(1, sizeof(dLinkedList));
+    dLinkedList *L = (dLinkedList *) calloc(1, sizeof(dLinkedList));
 
-    T->head = NULL;
-    T->tail = NULL;
-    T->size = 0;
+    L->head = NULL;
+    L->tail = NULL;
+    L->size = 0;
 
-    return T;
+    return L;
 }
 
 /**
@@ -79,9 +78,9 @@ void DNode_destroy(DNode **dnode_ref) {
  * @param L_ref: Endereço de memória da lista
  */
 void dLinkedList_destroy(dLinkedList **L_ref) {
-    dLinkedList *T = *L_ref;
+    dLinkedList *L = *L_ref;
 
-    DNode *current = T->head;
+    DNode *current = L->head;
     DNode *aux = NULL;
 
     while (current != NULL) {
@@ -91,6 +90,90 @@ void dLinkedList_destroy(dLinkedList **L_ref) {
         DNode_destroy(&aux);
     }
 
-    free(T);
+    free(L);
     *L_ref = NULL;
+}
+
+/******************* FUNÇÕES DE VERIFICAÇÃO NA LISTA *******************/
+
+/**
+ * @brief Verifica se a lista está vazia
+ * @param L_ref: Endereço de memória da lista
+ */
+bool dLinkedList_account_is_empty(const dLinkedList *L) {
+    return L->size == 0;
+}
+
+/******************* FUNÇÕES DE INSERÇÃO NA LISTA *******************/
+
+/**
+ * @brief Adiciona um novo nó ao inicio da lista
+ * @param L: Endereço de memória da lista
+ * @param content: Conteúdo que deverá ser armazenado no nó
+ */
+void dLinkedList_account_add_first(dLinkedList *L, bank_transaction *content) {
+    // Cria um novo nó com o conteúdo desejado
+    DNode *p = DNode_transaction_create(content);
+    p->next = L->head;
+
+    if (dLinkedList_account_is_empty(L)) {
+        L->tail = p;
+    } else {
+        L->head->previous = p;
+    }
+
+    L->head = p;
+    L->size++;
+}
+
+/**
+ * @brief Adiciona um novo nó ao final da lista
+ * @param L: Endereço de memória da lista
+ * @param content: Conteúdo que deverá ser armazenado no nó
+ */
+void dLinkedList_account_add_last(dLinkedList *L, bank_transaction *content) {
+    // Cria um novo nó com o conteúdo desejado
+    DNode *p = DNode_transaction_create(content);
+    p->previous = L->tail;
+
+    if (dLinkedList_account_is_empty(L)) {
+        L->head = p;
+    } else {
+        L->tail->next = p;
+    }
+
+    L->tail = p;
+    L->size++;
+}
+
+void dLinkedList_account_add_at_position(dLinkedList *L, bank_transaction *content, int position) {
+    // Verificando se a posição desejada existe.
+    if ((position < 1) || (position > L->size + 1)) {
+        fprintf(stderr, "ERROR in 'LinkedList_account_add_at_position'\n");
+        fprintf(stderr, "Position [%d] is out of bounds: [1, %d]\n", position, L->size);
+        return;
+    }
+
+    DNode *p = DNode_transaction_create(content);
+
+    // Se a inserção for na primeira posição
+    if (position == 1) {
+        dLinkedList_account_add_first(L, content);
+        return;
+    } 
+
+    DNode *current = L->head;
+    DNode *previous = NULL;
+
+    // Percorre os elementos da lista até a posição desejada
+    for (int count = 1; (current != NULL) && count < position; count++) {
+        previous = current; // Armazena o elemento anterior
+        current = current->next; // Armazena o próximo elemento
+    }
+
+    p->next = current;
+    p->previous = previous;
+
+    previous->next = p;
+    current->previous = p;
 }
