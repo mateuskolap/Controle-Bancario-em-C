@@ -1,3 +1,15 @@
+/**
+ * Autor......: Mateus kolapouski
+ * Data.......: 31/10/2024
+ * Equipe.....: 150020-2023 Mateus kolapouski
+ *              231597-2024 Rian da Cruz
+ * 
+ * objetivo...: criar um sistema bancario para registro de contas e transações
+ * 
+ * subfunção..: funçoes lista simplesmente encadeada
+ */
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
