@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <windows.h>
-#include "include/linked_list.h"
+#include "include/lista_contas.h"
+#include "include/lista_transacoes.h"
 #include "include/screens.h"
 
 int main() {
@@ -27,6 +28,7 @@ int main() {
             system("cls");
             screen();
             Financial_Transaction();
+            break;
         default:
             break;
         }

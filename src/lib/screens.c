@@ -1,3 +1,14 @@
+/**
+ * Autor......: Rian da Cruz
+ * Data.......: 26/10/2024
+ * Equipe.....: 150020-2023 Mateus kolapouski
+ *              231597-2024 Rian da Cruz
+ * 
+ * objetivo...: criar um sistema bancario para registro de contas e transações
+ * 
+ * subfunção..: funçoes de telas
+ */
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<conio.h>
@@ -59,6 +70,9 @@ void screen() {
 
 void main_menu () {
 
+    system("cls");
+    screen();
+
     gotoxy(27,10);
     printf("1. Cadastro de Contas");
     gotoxy(27,12);
@@ -69,6 +83,10 @@ void main_menu () {
 }
 
 void subMenu () {
+
+    system("cls");
+    screen();
+
     gotoxy(27,10);
     printf("1. Incluir Conta");
     gotoxy(27,12);
@@ -81,11 +99,39 @@ void subMenu () {
 
 void Financial_Transaction () {
 
+    system("cls");
+    screen();
+
+
     gotoxy(27,10);
     printf("1. Registrar Entrada");
     gotoxy(27,12);
     printf("2. Registrar Saida");
     gotoxy(27,14);
     printf("3. Consultar Movimentacao");
+
+}
+
+void registration_query () {
+
+    system("cls");
+    screen();
+
+    gotoxy(5,5);
+    printf("1- codigo:");
+    gotoxy(5,7);
+    printf("2- branco:");
+    gotoxy(5,9);
+    printf("3- agencia:");
+    gotoxy(5,11);
+    printf("4- numero da conta:");
+    gotoxy(5,13);
+    printf("5- tipo de conta:");
+    gotoxy(5,13);
+    printf("6- saldo:");
+    gotoxy(5,13);
+    printf("7- limite:");
+    gotoxy(5,13);
+    printf("8- status:");
 
 }
