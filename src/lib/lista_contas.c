@@ -14,33 +14,6 @@
 #include <stdbool.h>
 #include <string.h>
 #include "../include/lista_contas.h"
-#include "../include/lista_transacoes.h"
-
-// Estrutura que armazenará as informações da conta bancária
-typedef struct _bank_account {
-    int codigo_conta;
-    char banco[50];
-    char agencia[10];
-    char numero_conta[20];
-    char tipo_conta[20];
-    double vl_saldo;
-    double vl_limite;
-    char status[10];
-    List *transacoes;
-} bank_account;
-
-// Nó que armazenará o conteúdo da estrutura de contas bancárias e um ponteiro para o próximo nó
-typedef struct _snode {
-    bank_account *content; // Ponteiro para o conteúdo da conta
-    struct _snode *next;
-} SNode;
-
-// Estrutura da lista simplesmente encadeada
-typedef struct _linkedList {
-    SNode *head;
-    SNode *tail;
-    int size;
-} LinkedList;
 
 /******************* "CONSTRUTORES" *******************/
 
@@ -72,8 +45,8 @@ LinkedList *CriarListaContas() {
  * @brief Cria um novo nó para armazenar uma conta bancária e inicializa suas propriedades.
  * 
  * A função aloca dinamicamente memória para um novo nó (`SNode`) e associa o conteúdo da conta bancária
- * ao campo `content` do nó. O campo `transacoes` da conta é inicializado como `NULL`, e o ponteiro `next` do nó
- * é configurado para `NULL`, indicando que ele não aponta para nenhum próximo nó. A função retorna o ponteiro
+ * ao campo `content` do nó. O ponteiro `next` do nó é configurado para `NULL`, indicando que ele não
+ * aponta para nenhum próximo nó. A função retorna o ponteiro
  * para o novo nó criado.
  * 
  * @param content Ponteiro para a conta bancária (`bank_account`) que será armazenada no novo nó.
@@ -88,7 +61,6 @@ SNode *CriarConta(bank_account *content) {
     SNode *snode = (SNode *) calloc(1, sizeof(SNode));
 
     snode->content = content;
-    snode->content->transacoes = CriarListaTransacoes();
     snode->next = NULL;
 
     return snode;
@@ -112,8 +84,6 @@ SNode *CriarConta(bank_account *content) {
 void ExcluirConta(SNode **snode_ref) {
     // Auxiliar para acessar o conteúdo da conta
     SNode *snode = *snode_ref;
-
-    // Implementar aqui a função para destruir a lista de transacoes ----------------------------------------
 
     free(snode->content); // Liberando o conteúdo do nó
     free(snode); // Liberando o nó
@@ -169,33 +139,6 @@ void ExcluirListaContas(LinkedList **L_ref) {
 
 bool ListaContasEstaVazia(const LinkedList *L) {
     return L->size == 0;
-}
-
-/**
- * @brief Consulta o saldo de uma conta bancária.
- * 
- * A função localiza a conta bancária com o código informado na lista de contas (`LinkedList`),
- * utilizando a função `ConsultarConta`. Em seguida, retorna o saldo da conta (`vl_saldo`).
- * 
- * Caso a conta não seja encontrada na lista, a função pode retornar um valor indefinido, pois a
- * função `ConsultarConta` retornaria `NULL`.
- * 
- * @param L Ponteiro para a lista de contas bancárias (`LinkedList`).
- * @param codigo_conta Código da conta bancária que se deseja consultar.
- * 
- * @return Saldo da conta bancária (`vl_saldo`).
- * 
- * @note Caso a conta não seja encontrada, a função retornará o valor '-1'.
- */
-double ConsultarSaldo(LinkedList *L, int codigo_conta) {
-    bank_account *conta = ConsultarConta(L, codigo_conta);
-    
-    if (conta != NULL) {
-        return conta->vl_saldo;
-    }
-
-    fprintf(stderr, "ERROR in 'ConsultarSaldo': This account doesn't exists.\n");
-    exit(EXIT_FAILURE);
 }
 
 /******************* FUNÇÕES DE INSERÇÃO NA LISTA *******************/
@@ -493,8 +436,5 @@ void AlterarInformacao(bank_account *conta, const int informacao, char nova_info
             strncpy(conta->status, nova_informacao, sizeof(conta->status) - 1);
             conta->status[sizeof(conta->status) - 1] = '\0';
             break;
-        default:
-            fprintf(stderr, "Error in 'AlterarInformação': The 'informacao' parameter entered does not exist");
-            return;
     }
 }

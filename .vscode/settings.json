@@ -64,6 +64,7 @@
     "stdio.h": "c",
     "doubly_linked_list.h": "c",
     "lista_contas.h": "c",
-    "lista_transacoes.h": "c"
+    "lista_transacoes.h": "c",
+    "string.h": "c"
   }
 }
