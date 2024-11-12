@@ -9,7 +9,6 @@
  * subfunção..: cabeçalho funções de telas
  */
 
-
 #ifndef SCREENS_H
 #define SCREENS_H
 

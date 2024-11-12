@@ -104,6 +104,7 @@ void Financial_Transaction () {
     system("cls");
     screen();
 
+
     gotoxy(27,10);
     printf("1. Registrar Entrada");
     gotoxy(27,12);
