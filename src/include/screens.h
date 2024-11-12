@@ -6,7 +6,7 @@
  * 
  * objetivo...: criar um sistema bancario para registro de contas e transações
  * 
- * subfunção..: cabeçalho lista duplamente encadeada
+ * subfunção..: cabeçalho funções de telas
  */
 
 
@@ -37,5 +37,7 @@ void subMenu ();
  * tela submenu de movimentação financeira
  */
 void Financial_Transaction();
+
+void registration_query ();
 
 #endif
