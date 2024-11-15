@@ -1,20 +1,8 @@
-/**
- * Autor......: Rian da Cruz
- * Data.......: 12/11/2024
- * Equipe.....: 150020-2023 Mateus kolapouski
- *              231597-2024 Rian da Cruz
- * 
- * objetivo...: criar um sistema bancario para registro de contas e transações
- * 
- * subfunção..: validações de cadastros
- */
-
+#include "../../include/funcoes.h"
 #include<stdio.h>
 #include<stdlib.h>
 #include<conio.h>
 #include<windows.h>
-#include "../include/lista_contas.h"
-#include "../include/screens.h"
 
 void adicionar_conta(LinkedList *L, const int op) {
 

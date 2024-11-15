@@ -8,9 +8,7 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <windows.h>
-#include "include/lista_contas.h"
-#include "include/screens.h"
-
+#include "include/funcoes.h"
 
 
 
