@@ -95,6 +95,8 @@ void subMenu () {
     printf("3. Consultar Conta");
     gotoxy(27,16);
     printf("4. Remover Conta");
+    gotoxy(27,18);
+    printf("5. Voltar");
 }
 
 void Financial_Transaction () {
@@ -118,20 +120,20 @@ void registration_query () {
     screen();
 
     gotoxy(5,5);
-    printf("1- codigo:");
+    printf("1- codigo.........:");
     gotoxy(5,7);
-    printf("2- branco:");
+    printf("2- branco.........:");
     gotoxy(5,9);
-    printf("3- agencia:");
+    printf("3- agencia........:");
     gotoxy(5,11);
     printf("4- numero da conta:");
     gotoxy(5,13);
-    printf("5- tipo de conta:");
-    gotoxy(5,13);
-    printf("6- saldo:");
-    gotoxy(5,13);
-    printf("7- limite:");
-    gotoxy(5,13);
-    printf("8- status:");
+    printf("5- tipo de conta..:");
+    gotoxy(5,15);
+    printf("6- saldo..........:");
+    gotoxy(5,17);
+    printf("7- limite.........:");
+    gotoxy(5,19);
+    printf("8- status.........:");
 
 }
