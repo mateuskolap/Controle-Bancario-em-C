@@ -24,6 +24,7 @@ typedef struct _bank_account {
     double vl_saldo;
     double vl_limite;
     char status[10];
+    int num_transacoes;
 } bank_account;
 
 // Nó que armazenará o conteúdo da estrutura de contas bancárias e um ponteiro para o próximo nó
@@ -39,7 +40,7 @@ typedef struct _linkedList {
     int size;
 } LinkedList;
 
-LinkedList *CriarListaContas();
+LinkedList CriarListaContas();
 SNode *CriarConta(bank_account *content);
 void ExcluirConta(SNode **snode_ref);
 void ExcluirListaContas(LinkedList **L_ref);

@@ -103,6 +103,8 @@ void AdicionarTransacao(List *Lt, LinkedList *Lc, bank_transaction *content) {
     // Realizando as alterações na conta pertencente à transação
     bank_account *conta = ConsultarConta(Lc, p->content->codigo_conta);
 
+    conta->num_transacoes++;
+
     if (strcmp(p->content->tp_movimentacao, "CREDITO") == 0) {
         Creditar(conta, p->content->vl_movimento);
     } else if (strcmp(p->content->tp_movimentacao, "DEBITO") == 0) {

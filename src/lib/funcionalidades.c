@@ -11,6 +11,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "../include/funcionalidades.h"
 #include "../include/lista_contas.h"
 #include "../include/lista_transacoes.h"
@@ -42,10 +43,51 @@ double ConsultarSaldo(LinkedList *L, int codigo_conta) {
     exit(EXIT_FAILURE);
 }
 
+int ConsultarNumTransacoes(bank_account *conta) {
+    return conta->num_transacoes;
+}
+
 void Creditar(bank_account *conta, double valor) {
     conta->vl_saldo += valor;
 }
 
 void Debitar(bank_account *conta, double valor) {
     conta->vl_saldo -= valor;
+}
+
+void ListarContas(LinkedList *L, const int tipo_ordenacao) {
+    if (ListaContasEstaVazia(L)) {
+        return;
+    }
+
+    int swapped;
+    SNode *current;
+    SNode *previous = NULL;
+
+    do {
+        swapped = 0;
+        current = L->head;
+
+        while (current->next != previous) {
+            if (tipo_ordenacao == 1) {
+                if (strcmp(current->content->banco, current->next->content->banco) > 0) {
+                    void *aux = current->content;
+                    current->content = current->next->content;
+                    current->next->content = aux;
+                    swapped = 1;
+                }
+            } else if (tipo_ordenacao == 2) {
+                if (current->content->codigo_conta > current->next->content->codigo_conta) {
+                    void *aux = current->content;
+                    current->content = current->next->content;
+                    current->next->content = aux;
+                    swapped = 1;
+                }
+            }
+            current = current->next;
+
+        }
+        previous = current;
+
+    } while (swapped);
 }

@@ -62,6 +62,8 @@ SNode *CriarConta(bank_account *content) {
 
     snode->content = content;
     snode->next = NULL;
+    snode->content->num_transacoes = 0;
+    strncpy(snode->content->status, "ATIVA", sizeof(snode->content->status));
 
     return snode;
 }
