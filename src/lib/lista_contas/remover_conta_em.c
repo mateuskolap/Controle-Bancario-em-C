@@ -1,3 +1,15 @@
+/**
+ * Autor......: Mateus kolapouski
+ * Data.......: 31/10/2024
+ * Equipe.....: 150020-2023 Mateus kolapouski
+ *              231597-2024 Rian da Cruz
+ * 
+ * Objetivo...: criar um sistema bancario para registro de contas e transações
+ * 
+ * Subfunção..: Remover conta de uma determinada posição
+ */
+
+
 #include "../../include/funcoes.h"
 #include <stdlib.h>
 #include <stdio.h>
