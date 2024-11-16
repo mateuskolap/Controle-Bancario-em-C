@@ -13,32 +13,36 @@
 #include "../../include/funcoes.h"
 #include <string.h>
 
-void AdicionarTransacao(List *Lt, LinkedList *Lc, bank_transaction *content) {
-    // Cria um novo nó com o conteúdo desejado
-    DNode *p = CriarTransacao(content);
+void AdicionarTransacao(LinkedList *lista_contas, List *lista_transacoes, const int codigo_conta, char data_movimento[], const int tipo_movimentacao, const double valor_movimentacao) {
 
-    p->previous = Lt->tail;
+    bank_transaction transacao;
 
-    if (ListaTransacoesEstaVazia(Lt)) {
-        Lt->head = p;
-    } else {
-        Lt->tail->next = p;
+    if (tipo_movimentacao == 1) {
+        bank_account *conta = ConsultarConta(lista_contas, codigo_conta);
+
+        transacao.codigo_conta = codigo_conta;
+        strcpy(transacao.data_movimento, data_movimento);
+        strcpy(transacao.tp_movimentacao, "CREDITO");
+        transacao.vl_movimento = valor_movimentacao;
+        
+        conta->vl_saldo += valor_movimentacao; // Atualizando o saldo da conta
+
+        transacao.vl_saldo = conta->vl_saldo;
+
+    } else if (tipo_movimentacao == 2) {
+        bank_account *conta = ConsultarConta(lista_contas, codigo_conta);
+
+        transacao.codigo_conta = codigo_conta;
+        strcpy(transacao.data_movimento, data_movimento);
+        strcpy(transacao.tp_movimentacao, "DEBITO");
+        transacao.vl_movimento = valor_movimentacao;
+
+        conta->vl_saldo -= valor_movimentacao; // Atualizando o saldo da conta
+
+        transacao.vl_saldo = conta->vl_saldo;
     }
 
-    Lt->tail = p;
-    Lt->size++;
+    lista_transacoes++;
 
-    Lt->tail->content->sequencial = Lt->ultimo_sequencial;
-    Lt->ultimo_sequencial++;
-
-    // Realizando as alterações na conta pertencente à transação
-    bank_account *conta = ConsultarConta(Lc, p->content->codigo_conta);
-
-    conta->num_transacoes++;
-
-    if (strcmp(p->content->tp_movimentacao, "CREDITO") == 0) {
-        Creditar(conta, p->content->vl_movimento);
-    } else if (strcmp(p->content->tp_movimentacao, "DEBITO") == 0) {
-        Debitar(conta, p->content->vl_movimento);
-    }
+    return;
 }

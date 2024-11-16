@@ -32,7 +32,6 @@ List *CriarListaTransacoes() {
     L->head = NULL;
     L->tail = NULL;
     L->size = 0;
-    L->ultimo_sequencial = 1;
 
     return L;
 }

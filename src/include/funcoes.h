@@ -68,7 +68,6 @@ typedef struct _dLinkedList {
     DNode *head;
     DNode *tail;
     int size;
-    int ultimo_sequencial;
 } List;
 
 List *CriarListaTransacoes();

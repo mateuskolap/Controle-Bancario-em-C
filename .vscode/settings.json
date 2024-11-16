@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "funcoes.h": "c",
+        "stdlib.h": "c"
+    }
+}
