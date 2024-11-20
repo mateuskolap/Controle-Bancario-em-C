@@ -13,36 +13,31 @@
 #include "../../include/funcoes.h"
 #include <string.h>
 
-void AdicionarTransacao(LinkedList *lista_contas, List *lista_transacoes, const int codigo_conta, char data_movimento[], const int tipo_movimentacao, const double valor_movimentacao) {
+void AdicionarTransacao(List *lista_transacoes, LinkedList *lista_contas, bank_transaction *content) {
+    // Cria um novo nó com o conteúdo desejado
+    DNode *p = CriarTransacao(content);
 
-    bank_transaction transacao;
+    p->previous = lista_transacoes->tail;
 
-    if (tipo_movimentacao == 1) {
-        bank_account *conta = ConsultarConta(lista_contas, codigo_conta);
-
-        transacao.codigo_conta = codigo_conta;
-        strcpy(transacao.data_movimento, data_movimento);
-        strcpy(transacao.tp_movimentacao, "CREDITO");
-        transacao.vl_movimento = valor_movimentacao;
-        
-        conta->vl_saldo += valor_movimentacao; // Atualizando o saldo da conta
-
-        transacao.vl_saldo = conta->vl_saldo;
-
-    } else if (tipo_movimentacao == 2) {
-        bank_account *conta = ConsultarConta(lista_contas, codigo_conta);
-
-        transacao.codigo_conta = codigo_conta;
-        strcpy(transacao.data_movimento, data_movimento);
-        strcpy(transacao.tp_movimentacao, "DEBITO");
-        transacao.vl_movimento = valor_movimentacao;
-
-        conta->vl_saldo -= valor_movimentacao; // Atualizando o saldo da conta
-
-        transacao.vl_saldo = conta->vl_saldo;
+    if (ListaTransacoesEstaVazia(lista_transacoes)) {
+        lista_transacoes->head = p;
+    } else {
+        lista_transacoes->tail->next = p;
     }
 
-    lista_transacoes++;
+    lista_transacoes->tail = p;
+    lista_transacoes->size++;
 
-    return;
+    lista_transacoes->tail->content->sequencial = lista_transacoes->size;
+
+    // Realizando as alterações na conta pertencente à transação
+    bank_account *conta = ConsultarConta(lista_contas, p->content->codigo_conta);
+
+    conta->num_transacoes++;
+
+    if (strcmp(p->content->tp_movimentacao, "CREDITO") == 0) {
+        conta->vl_saldo += p->content->vl_movimento;
+    } else if (strcmp(p->content->tp_movimentacao, "DEBITO") == 0) {
+        conta->vl_saldo -= p->content->vl_movimento;
+    }
 }

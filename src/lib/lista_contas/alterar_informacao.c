@@ -35,7 +35,7 @@
  * @note Se o código `informacao` for 5 (saldo), a função emitirá uma mensagem de erro informando que o saldo 
  *       não pode ser alterado diretamente. Se `informacao` for inválido, uma mensagem de erro é exibida.
  */
-void AlterarInformacao(bank_account *conta, const int informacao, char nova_informacao[]) {
+void AlterarInformacao(bank_account *conta, const int informacao, void *nova_informacao) {
     switch (informacao) {
         case 1: // Alterando o banco
             strncpy(conta->banco, nova_informacao, sizeof(conta->banco) - 1);
@@ -57,7 +57,7 @@ void AlterarInformacao(bank_account *conta, const int informacao, char nova_info
             fprintf(stderr, "O saldo da conta não pode ser alterado!");
             return;
         case 6: // Alterando o limite da conta
-            conta->vl_limite = atof(nova_informacao);
+            conta->vl_limite = *(double *)nova_informacao;
             break;
         case 7: // Alterando o status da conta
             strncpy(conta->status, nova_informacao, sizeof(conta->status) - 1);

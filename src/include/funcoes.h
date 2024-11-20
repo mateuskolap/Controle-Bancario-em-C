@@ -39,11 +39,14 @@ void AdicionarContaInicio(LinkedList *L, bank_account *content);
 void AdicionarContaFinal(LinkedList *L, bank_account *content);
 void AdicionarContaEm(LinkedList *L, bank_account *content, int position);
 void RemoverContaInicio(LinkedList *L);
+void RemoverContaFinal(LinkedList *L);
 void RemoverContaEm(LinkedList *L, int position);
 bank_account *ConsultarConta(LinkedList *L, const int codigo_conta);
-void AlterarInformacao(bank_account *conta, const int informacao, char nova_informacao[]);
+bank_account *ConsultarContaPosicao(LinkedList *L, const int posicao);
+void AlterarInformacao(bank_account *conta, const int informacao, void *nova_informacao);
 void LerContasDeArquivo(LinkedList *L);
 void SalvarContasEmArquivo(LinkedList *L);
+void OrdenarLista(LinkedList *lista_contas, const int tipo_ordenacao);
 
 /***************************** LISTA DE TRANSACOES *****************************/
 // Estrutura que armazenará as movimentações bancárias
@@ -70,47 +73,34 @@ typedef struct _dLinkedList {
     int size;
 } List;
 
+/*
 List *CriarListaTransacoes();
 DNode *CriarTransacao(bank_transaction *content);
 void AdicionarTransacao(List *Lt, LinkedList *Lc, bank_transaction *content);
 bool ListaTransacoesEstaVazia(const List *L);
+*/
 
-/***************************** FUNCIONALIDADES *****************************/
-double ConsultarSaldo(LinkedList *L, int codigo_conta);
-void Creditar(bank_account *conta, double valor);
-void Debitar(bank_account *conta, double valor);
-void OrdenarContas(LinkedList *L, const int tipo_ordenacao);
+/***************************** TELAS *****************************/
+void gotoxy(int x, int y);
+void ExibirFormularioContas(int tipo_cadastro);
+void Moldura();
+void TelaPrincipal(LinkedList *lista_contas);
+void TelaContasBancarias(LinkedList *lista_contas);
+void TelaCadastrarConta(LinkedList *lista_contas, int tipo_cadastro);
+void TelaConsultaContas(LinkedList *lista_contas);
+void TelaConsultaGeralContas(LinkedList *lista_contas);
+void TelaConsultarContaCodigo(LinkedList *lista_contas);
+void TelaConsultarContaPorOrdem(LinkedList *lista_contas, const int tipo_ordenacao);
+void TelaRemoverConta(LinkedList *lista_contas, const int tipo_exclusao);
+void EscreverNoCentro(int y, char texto[]);
+void AlinharTextoDireita(int y, char texto[]);
+void AlinharTextoNaPosicao(int x, int y, char texto[]);
+void CriarTitulo(char titulo[]);
 
-/***************************** SCREENS *****************************/
-
-/**
- * função que define posição do cursor na tela
- */
-void gotoxy (int x, int y);
-
-/**
- * função que define a tela padrão do sistema
- */
-void screen();
-
-/**
- * tela de menu principal
- */
-void main_menu();
-
-/**
- * tela submenu para cadastro de contas
- */
-void subMenu ();
-
-/**
- * tela submenu de movimentação financeira
- */
-void Financial_Transaction();
-
-void registration_query ();
-
-/***************************** VALIDACAO CADASTROS *****************************/
-void adicionar_conta(LinkedList *L, const int op);
+/***************************** TELAS *****************************/
+void AdicionarTransacao(List *lista_transacoes, LinkedList *lista_contas, bank_transaction *content);
+List *CriarListaTransacoes();
+DNode *CriarTransacao(bank_transaction *content);
+bool ListaTransacoesEstaVazia(const List *L);
 
 #endif

@@ -28,19 +28,21 @@
  * 
  * @note A função emite uma mensagem de erro caso a lista esteja vazia.
  */
-bank_account *ConsultarConta(LinkedList *L, const int codigo_conta) {
+bank_account *ConsultarContaPosicao(LinkedList *L, const int posicao) {
     // Retorna um erro se a lista estiver vazia
     if (ListaContasEstaVazia(L)) {
         return NULL;
     }
 
+    int contagem = 1;
     SNode *aux = L->head;
 
     while (aux != NULL) {
-        if (aux->content->codigo_conta == codigo_conta) {
+        if (contagem == posicao) {
             return aux->content; // Conta encontrada, retorna o conteúdo
         }
         aux = aux->next;
+        contagem++;
     }
 
     return NULL; // Conta não encontrada, retorna NULL (vazio)
