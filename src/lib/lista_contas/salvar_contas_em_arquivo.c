@@ -23,7 +23,7 @@
  *  - O arquivo binário é criado no caminho "../database/lista_contas.dat".
  */
 void SalvarContasEmArquivo(LinkedList *L) {
-    FILE *file = fopen("../database/lista_contas.dat", "wb");
+    FILE *file = fopen("src/database/lista_contas.dat", "wb");
 
     // Verificando se houve algum erro na abertura do arquivo
     if (file == NULL) {

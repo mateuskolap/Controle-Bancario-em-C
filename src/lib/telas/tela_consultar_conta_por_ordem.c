@@ -13,9 +13,9 @@ void TelaConsultarContaPorOrdem(LinkedList *lista_contas, const int tipo_ordenac
     }
 
     if (tipo_ordenacao == 1) {
-        OrdenarLista(lista_contas, 1);
+        OrdenarListaContas(lista_contas, 1);
     } else if (tipo_ordenacao == 2) {
-        OrdenarLista(lista_contas, 2);
+        OrdenarListaContas(lista_contas, 2);
     }
 
     int linhas_pagina = 13, numero_pagina = 1, opcao;

@@ -24,7 +24,7 @@
  *    e fecha o arquivo.
  */
 void LerContasDeArquivo(LinkedList *L) {
-    FILE *file = fopen("../database/lista_contas.dat", "rb");
+    FILE *file = fopen("src/database/lista_contas.dat", "rb");
 
     if (file == NULL) {
         return;
@@ -32,20 +32,25 @@ void LerContasDeArquivo(LinkedList *L) {
 
     bank_account conta;
     while (fread(&conta, sizeof(bank_account), 1, file) == 1) {
+        // Alocar memória para o novo nó
         SNode *novoNode = (SNode *) calloc(1, sizeof(SNode));
         if (novoNode == NULL) {
             fclose(file);
             return;
         }
 
+        // Alocar memória para o conteúdo do nó e copiar os dados
         novoNode->content = (bank_account *) malloc(sizeof(bank_account));
         if (novoNode->content == NULL) {
+            free(novoNode); // Liberar memória alocada para o nó
             fclose(file);
             return;
         }
+        *(novoNode->content) = conta; // Copiar os dados da conta para o nó
 
         novoNode->next = NULL;
 
+        // Inserir o nó na lista
         if (L->head == NULL) {
             L->head = novoNode;
             L->tail = novoNode;
@@ -53,6 +58,9 @@ void LerContasDeArquivo(LinkedList *L) {
             L->tail->next = novoNode;
             L->tail = novoNode;
         }
+
+        // Incrementar o tamanho da lista
+        L->size++;
     }
 
     fclose(file);

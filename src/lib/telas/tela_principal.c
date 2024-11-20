@@ -25,6 +25,7 @@ void TelaPrincipal(LinkedList *lista_contas) {
                 break;
             case 3:
                 SalvarContasEmArquivo(lista_contas);
+                ExcluirListaContas(&lista_contas);
                 return;
             default:
                 gotoxy(8, 24);

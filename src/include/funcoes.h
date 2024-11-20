@@ -46,7 +46,7 @@ bank_account *ConsultarContaPosicao(LinkedList *L, const int posicao);
 void AlterarInformacao(bank_account *conta, const int informacao, void *nova_informacao);
 void LerContasDeArquivo(LinkedList *L);
 void SalvarContasEmArquivo(LinkedList *L);
-void OrdenarLista(LinkedList *lista_contas, const int tipo_ordenacao);
+void OrdenarListaContas(LinkedList *lista_contas, const int tipo_ordenacao);
 
 /***************************** LISTA DE TRANSACOES *****************************/
 // Estrutura que armazenará as movimentações bancárias
