@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "funcoes.h": "c",
-        "stdlib.h": "c",
-        "stdio.h": "c",
-        "escrever_no_centro": "cpp",
-        "windows.h": "c"
-    }
-}

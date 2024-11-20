@@ -19,6 +19,12 @@ void TelaCadastrarConta(LinkedList *lista_contas, int tipo_cadastro) {
             gotoxy(26, 6);
             printf("                                       ");
             gotoxy(26, 6);
+
+            char tecla = getch(); 
+            if (tecla == 27) { 
+                return; 
+            }
+
             scanf("%d", &conta->codigo_conta);
 
             if (conta->codigo_conta < 0) {
@@ -54,7 +60,6 @@ void TelaCadastrarConta(LinkedList *lista_contas, int tipo_cadastro) {
             gotoxy(8, 24);
             printf("1=Corrente / 2=Poupanca / 3=Cartao Credito");
             gotoxy(26, 14);
-
             scanf("%d", &aux_conta);
 
             gotoxy(8, 24);
@@ -104,6 +109,7 @@ void TelaCadastrarConta(LinkedList *lista_contas, int tipo_cadastro) {
             gotoxy(26, 18);
             printf("                                       ");
             gotoxy(26, 18);
+            
             scanf("%lf", &conta->vl_limite);
 
             if (conta->vl_limite >= 0) {
