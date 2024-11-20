@@ -44,6 +44,7 @@ void TelaContasBancarias(LinkedList *lista_contas) {
                 TelaRemoverConta(lista_contas, 3);
                 break;
             case 7:
+                TelaAlteracaoConta(lista_contas);
                 break;
             case 8:
                 TelaConsultaContas(lista_contas);
