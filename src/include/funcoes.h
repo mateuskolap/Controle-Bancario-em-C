@@ -73,18 +73,18 @@ typedef struct _dLinkedList {
     int size;
 } List;
 
-/*
 List *CriarListaTransacoes();
 DNode *CriarTransacao(bank_transaction *content);
 void AdicionarTransacao(List *Lt, LinkedList *Lc, bank_transaction *content);
 bool ListaTransacoesEstaVazia(const List *L);
-*/
+void AdicionarTransferencia(List *lista_transacoes, LinkedList *lista_contas, bank_account *conta_origem, bank_account *conta_destino, const double valor, char data[]);
+void SalvarTransacoesEmArquivo(List *L);
 
 /***************************** TELAS *****************************/
 void gotoxy(int x, int y);
 void ExibirFormularioContas(int tipo_cadastro);
 void Moldura();
-void TelaPrincipal(LinkedList *lista_contas);
+void TelaPrincipal(LinkedList *lista_contas, List *lista_transacoes);
 void TelaContasBancarias(LinkedList *lista_contas);
 void TelaCadastrarConta(LinkedList *lista_contas, int tipo_cadastro);
 void TelaConsultaContas(LinkedList *lista_contas);
@@ -97,11 +97,12 @@ void EscreverNoCentro(int y, char texto[]);
 void AlinharTextoDireita(int y, char texto[]);
 void AlinharTextoNaPosicao(int x, int y, char texto[]);
 void CriarTitulo(char titulo[]);
+void ExibirFormularioTransacao();
+void TelaMovimentacaoDebitoCredito(LinkedList *lista_contas, List *lista_transacoes);
+void TelaMovimentacoesBancarias(LinkedList *lista_contas, List *lista_transacoes);
 
-/***************************** TELAS *****************************/
-void AdicionarTransacao(List *lista_transacoes, LinkedList *lista_contas, bank_transaction *content);
-List *CriarListaTransacoes();
-DNode *CriarTransacao(bank_transaction *content);
-bool ListaTransacoesEstaVazia(const List *L);
+/***************************** VERIFICAÇÕES *****************************/
+bool ValidarData(char data[]);
+int InverterData(char data[]);
 
 #endif

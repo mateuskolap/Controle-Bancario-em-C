@@ -9,7 +9,7 @@ int main() {
     List *lista_transacoes = CriarListaTransacoes();
     LerContasDeArquivo(lista_contas);
 
-    TelaPrincipal(lista_contas);
+    TelaPrincipal(lista_contas, lista_transacoes);
 
     return 0;
 }

@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <stdio.h>
 
-void TelaPrincipal(LinkedList *lista_contas) {
+void TelaPrincipal(LinkedList *lista_contas, List *lista_transacoes) {
     int opcao;
 
     while (1) {
@@ -22,6 +22,7 @@ void TelaPrincipal(LinkedList *lista_contas) {
                 TelaContasBancarias(lista_contas);
                 break;
             case 2:
+                TelaMovimentacoesBancarias(lista_contas, lista_transacoes);
                 break;
             case 3:
                 SalvarContasEmArquivo(lista_contas);

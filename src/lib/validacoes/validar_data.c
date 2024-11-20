@@ -1,7 +1,20 @@
+/**
+ * Autor......: Mateus kolapouski
+ * Data.......: 31/10/2024
+ * Equipe.....: 150020-2023 Mateus kolapouski
+ *              231597-2024 Rian da Cruz
+ * 
+ * Objetivo...: criar um sistema bancario para registro de contas e transações
+ * 
+ * Subfunção..: Verificar se a data inserida é válida
+ */
+
+
 #include "../../include/funcoes.h"
 #include <string.h>
 #include <time.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 bool ValidarData(char data[]) {
     int dia, mes, ano;
