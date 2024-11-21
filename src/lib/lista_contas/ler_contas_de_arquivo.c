@@ -32,35 +32,18 @@ void LerContasDeArquivo(LinkedList *L) {
 
     bank_account conta;
     while (fread(&conta, sizeof(bank_account), 1, file) == 1) {
-        // Alocar memória para o novo nó
-        SNode *novoNode = (SNode *) calloc(1, sizeof(SNode));
-        if (novoNode == NULL) {
+        // Alocar memória para o conteúdo da conta
+        bank_account *novaConta = (bank_account *) malloc(sizeof(bank_account));
+        if (novaConta == NULL) {
             fclose(file);
             return;
         }
 
-        // Alocar memória para o conteúdo do nó e copiar os dados
-        novoNode->content = (bank_account *) malloc(sizeof(bank_account));
-        if (novoNode->content == NULL) {
-            free(novoNode); // Liberar memória alocada para o nó
-            fclose(file);
-            return;
-        }
-        *(novoNode->content) = conta; // Copiar os dados da conta para o nó
+        // Copiar os dados da conta lida para a nova estrutura
+        *novaConta = conta;
 
-        novoNode->next = NULL;
-
-        // Inserir o nó na lista
-        if (L->head == NULL) {
-            L->head = novoNode;
-            L->tail = novoNode;
-        } else {
-            L->tail->next = novoNode;
-            L->tail = novoNode;
-        }
-
-        // Incrementar o tamanho da lista
-        L->size++;
+        // Usar a função para adicionar a nova conta ao final da lista
+        AdicionarContaFinal(L, novaConta);
     }
 
     fclose(file);

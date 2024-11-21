@@ -4,6 +4,7 @@
         "funcoes.h": "c",
         "string.h": "c",
         "stdbool.h": "c",
-        "windows.h": "c"
+        "windows.h": "c",
+        "stdio.h": "c"
     }
 }

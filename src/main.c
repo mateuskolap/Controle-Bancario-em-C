@@ -11,5 +11,8 @@ int main() {
 
     TelaPrincipal(lista_contas, lista_transacoes);
 
+    ExcluirListaContas(&lista_contas);
+    ExcluirListaTransacoes(&lista_transacoes);
+    
     return 0;
 }

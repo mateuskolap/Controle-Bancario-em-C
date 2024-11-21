@@ -79,6 +79,8 @@ void AdicionarTransacao(List *Lt, LinkedList *Lc, bank_transaction *content);
 bool ListaTransacoesEstaVazia(const List *L);
 void AdicionarTransferencia(List *lista_transacoes, LinkedList *lista_contas, bank_account *conta_origem, bank_account *conta_destino, const double valor, char data[]);
 void SalvarTransacoesEmArquivo(List *L);
+void ExcluirTransacao(DNode **dnode_ref);
+void ExcluirListaTransacoes(List **L_ref);
 
 /***************************** TELAS *****************************/
 void gotoxy(int x, int y);
