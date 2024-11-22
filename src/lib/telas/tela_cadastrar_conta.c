@@ -16,14 +16,12 @@ void TelaCadastrarConta(LinkedList *lista_contas, int tipo_cadastro) {
         ExibirFormularioContas(tipo_cadastro);
 
         while (1) {
+            gotoxy(8, 24);
+            printf("digite 0 para sair:");
             gotoxy(26, 6);
             printf("                                       ");
             gotoxy(26, 6);
 
-            char tecla = getch(); 
-            if (tecla == 27) { 
-                return; 
-            }
 
             scanf("%d", &conta->codigo_conta);
 
@@ -37,22 +35,47 @@ void TelaCadastrarConta(LinkedList *lista_contas, int tipo_cadastro) {
                 getch();
                 gotoxy(8, 24);
                 printf("                                                        ");
-            } else {
+            } else if (conta ->codigo_conta == 0 ){
+                return;
+            }else{
                 break;
             }
         }
 
-        gotoxy(26, 8);
-        fflush(stdin);
-        fgets(conta->banco, sizeof(conta->banco), stdin);
+        gotoxy(8, 24);
+        printf("                                       ");
+
+        while (1){
         
-        gotoxy(26, 10);
-        fflush(stdin);
-        fgets(conta->agencia, sizeof(conta->agencia), stdin);
+            gotoxy(26, 8);
+            fflush(stdin);
+            fgets(conta->banco, sizeof(conta->banco), stdin);   
+            
+            if(conta->banco[0] != '\n'){
+                break;
+            }
+
+        }
+        while (1){
         
-        gotoxy(26, 12);
-        fflush(stdin);
-        fgets(conta->numero_conta, sizeof(conta->numero_conta), stdin);
+            gotoxy(26, 10);
+            fflush(stdin);
+            fgets(conta->agencia, sizeof(conta->agencia), stdin);
+            
+            if(conta->agencia[0] != '\n'){
+                break;
+            }
+        }
+        while (1){
+        
+            gotoxy(26, 12);
+            fflush(stdin);
+            fgets(conta->numero_conta, sizeof(conta->numero_conta), stdin);   
+            
+            if(conta->numero_conta[0] != '\n'){
+                break;
+            }
+        }
         
         while (1) {
             gotoxy(26, 14);
@@ -65,24 +88,25 @@ void TelaCadastrarConta(LinkedList *lista_contas, int tipo_cadastro) {
             gotoxy(8, 24);
             printf("                                          ");
 
-            if (aux_conta >= 1 && aux_conta <= 3) { 
-                switch (aux_conta) {
-                    case 1:
-                        strcpy(conta->tipo_conta, "CORRENTE");
-                        break;
-                    case 2:
-                        strcpy(conta->tipo_conta, "POUPANCA");
-                        break;
-                    case 3:
-                        strcpy(conta->tipo_conta, "CREDITO");
-                        break;
-                }
-                break; 
-            } else {
-                AlinharTextoNaPosicao(8, 24, "Entrada inválida! Digite um número entre 1 e 3.");
-                getch();
-                gotoxy(8, 24);
-                printf("                                                      ");
+            switch (aux_conta) {
+                case 1:
+                    strcpy(conta->tipo_conta, "CORRENTE");
+                    break;
+                case 2:
+                    strcpy(conta->tipo_conta, "POUPANCA");
+                    break;
+                case 3:
+                    strcpy(conta->tipo_conta, "CREDITO");
+                    break;
+                default:
+                    gotoxy(8, 24);
+                    printf("Digite um valor valido!");
+                    getch();
+                    gotoxy(8, 24);
+                    printf("                                                      ");
+            }
+            if(aux_conta >= 1 && aux_conta <= 3){
+                break;
             }
         }
         gotoxy(28, 14);

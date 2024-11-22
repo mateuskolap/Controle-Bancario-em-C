@@ -43,6 +43,13 @@ void TelaRemoverConta(LinkedList *lista_contas, const int tipo_exclusao) {
             conta = ConsultarContaPosicao(lista_contas, posicao_conta);
         }
 
+        if (conta->num_transacoes > 0){
+            gotoxy(8, 24);
+            printf("conta com transações, impossivel excluir!");
+            getch();
+            return;
+        }
+
         if (conta != NULL) {
             gotoxy(25, 6);
             printf("%d", conta->codigo_conta);

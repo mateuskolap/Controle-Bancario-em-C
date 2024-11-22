@@ -12,16 +12,19 @@ void TelaConsultarContaCodigo(LinkedList *lista_contas) {
         ExibirFormularioContas(4);
 
         gotoxy(8, 24);
-        printf("Pressione ESC para voltar");
+        printf("Pressione 0 para voltar");
 
         gotoxy(25, 6);
 
-        char tecla = getch(); 
-        if (tecla == 27) { 
-            return; 
-        }
+
 
         scanf("%d", &codigo_conta);
+        
+        if (codigo_conta == 0) {
+            break;
+        }
+        
+
         bank_account *conta = ConsultarConta(lista_contas, codigo_conta);
 
         if (conta != NULL) {

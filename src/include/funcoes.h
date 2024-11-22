@@ -55,6 +55,7 @@ typedef struct _bank_transaction {
     int codigo_conta;
     char data_movimento[11];
     char tp_movimentacao[7];
+    char favorecido[50];
     double vl_movimento;
     double vl_saldo;
 } bank_transaction;

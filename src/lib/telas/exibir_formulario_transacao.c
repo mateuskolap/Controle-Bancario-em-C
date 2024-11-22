@@ -15,7 +15,6 @@ void ExibirFormularioTransacao() {
    AlinharTextoNaPosicao(4, nLinha++, "Saldo..................:");
    AlinharTextoNaPosicao(4, nLinha++, "Limite.................:");
    AlinharTextoNaPosicao(4, nLinha++, "Total Saldo + Limite...:");
-   AlinharTextoNaPosicao(4, nLinha++, "Codigo da Conta........:");
    AlinharTextoNaPosicao(4, ++nLinha, "1-Data Movimentacao....:");
    AlinharTextoNaPosicao(4, ++nLinha, "2-Tipo Movimentacao....:");
    AlinharTextoNaPosicao(4, ++nLinha, "3-Favorecido...........:");
