@@ -84,6 +84,7 @@ void TelaConsultarContaPorOrdem(LinkedList *lista_contas, const int tipo_ordenac
                 printf("%s", current->content->status);
                 gotoxy(107, linha_atual);
                 printf("%d", current->content->num_transacoes);
+                
             }
             current = current->next; // Avança para o próximo nó
         }

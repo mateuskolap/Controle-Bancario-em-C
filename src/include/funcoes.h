@@ -43,7 +43,6 @@ void RemoverContaFinal(LinkedList *L);
 void RemoverContaEm(LinkedList *L, int position);
 bank_account *ConsultarConta(LinkedList *L, const int codigo_conta);
 bank_account *ConsultarContaPosicao(LinkedList *L, const int posicao);
-void AlterarInformacao(bank_account *conta, const int informacao, void *nova_informacao);
 void LerContasDeArquivo(LinkedList *L);
 void SalvarContasEmArquivo(LinkedList *L);
 void OrdenarListaContas(LinkedList *lista_contas, const int tipo_ordenacao);
@@ -53,8 +52,8 @@ void OrdenarListaContas(LinkedList *lista_contas, const int tipo_ordenacao);
 typedef struct _bank_transaction {
     int sequencial;
     int codigo_conta;
-    char data_movimento[11];
-    char tp_movimentacao[7];
+    char data_movimento[12];
+    char tp_movimentacao[10];
     char favorecido[50];
     double vl_movimento;
     double vl_saldo;
@@ -76,12 +75,13 @@ typedef struct _dLinkedList {
 
 List *CriarListaTransacoes();
 DNode *CriarTransacao(bank_transaction *content);
-void AdicionarTransacao(List *Lt, LinkedList *Lc, bank_transaction *content);
+void AdicionarTransacao(List *lista_transacoes, LinkedList *lista_contas, bank_transaction *content, const int tipo_transacao);
 bool ListaTransacoesEstaVazia(const List *L);
 void AdicionarTransferencia(List *lista_transacoes, LinkedList *lista_contas, bank_account *conta_origem, bank_account *conta_destino, const double valor, char data[]);
 void SalvarTransacoesEmArquivo(List *L);
 void ExcluirTransacao(DNode **dnode_ref);
 void ExcluirListaTransacoes(List **L_ref);
+void LerTransacaoDeArquivo(List *lista_transacoes);
 
 /***************************** TELAS *****************************/
 void gotoxy(int x, int y);
@@ -97,15 +97,19 @@ void TelaConsultarContaPorOrdem(LinkedList *lista_contas, const int tipo_ordenac
 void TelaRemoverConta(LinkedList *lista_contas, const int tipo_exclusao);
 void TelaAlteracaoConta(LinkedList *lista_contas);
 void EscreverNoCentro(int y, char texto[]);
-void AlinharTextoDireita(int y, char texto[]);
+void EscreverNoCentroX1X2(int x1, int x2, int y, char texto[]);
 void AlinharTextoNaPosicao(int x, int y, char texto[]);
 void CriarTitulo(char titulo[]);
 void ExibirFormularioTransacao();
 void TelaMovimentacaoDebitoCredito(LinkedList *lista_contas, List *lista_transacoes);
 void TelaMovimentacoesBancarias(LinkedList *lista_contas, List *lista_transacoes);
+void TelaTransferenciaEntreContas(LinkedList *lista_contas, List *lista_transacoes);
+void ExibirFormularioTransferencia(int x_inicial, int y_inicial);
+void TelaConsultarTransacoes(LinkedList *lista_contas, List *lista_transacoes);
 
 /***************************** VERIFICAÇÕES *****************************/
 bool ValidarData(char data[]);
 int InverterData(char data[]);
+char *VerificarUltimaData(List *lista_transacoes, const int codigo_conta);
 
 #endif

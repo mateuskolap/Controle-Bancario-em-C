@@ -8,6 +8,7 @@ int main() {
     LinkedList *lista_contas = CriarListaContas();
     List *lista_transacoes = CriarListaTransacoes();
     LerContasDeArquivo(lista_contas);
+    LerTransacaoDeArquivo(lista_transacoes);
 
     TelaPrincipal(lista_contas, lista_transacoes);
 

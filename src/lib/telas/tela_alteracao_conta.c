@@ -9,157 +9,283 @@
  * @param lista_contas Lista encadeada contendo todas as contas cadastradas.
  */
 void TelaAlteracaoConta(LinkedList *lista_contas) {
-    int codigo_conta, continuar_consulta, opcao_alteracao, continuar_alteracao;
-    char novo_banco[20];
-    char nova_agencia[10];
-    char novo_numero_conta[15];
-    char novo_tipo_conta[20];
-    double novo_limite;
-    char novo_status[10];
 
-    while (1) {       
+    int aux_alteracao = 0, codigo_conta = 0, aux_tipo_conta = 0, aux_satus_conta = 0, editar_outra_informacao = 0, editar_outra_conta = 0;
+    
+    while (1) {
+
         Moldura();
-        CriarTitulo("ALTERAÇÃO DE INFORMACAO DA CONTA");
+        CriarTitulo("ALTERAR INFORMACAO DE UMA CONTA");
+
         ExibirFormularioContas(4);
 
-        gotoxy(8, 24);
-        printf("Pressione ESC para voltar");
+        AlinharTextoNaPosicao(8, 24, "'0' para voltar");
 
-        gotoxy(25, 6);
+        // Validando o código inserido pelo usuário
+        while (1) {
 
-        char tecla = getch(); 
-        if (tecla == 27) { 
-            return; 
+            // Limpando conteúdo do campo de inserção do código
+            AlinharTextoNaPosicao(26, 6, "                                                      ");
+            gotoxy(26, 6);
+
+            scanf("%d", &codigo_conta);
+
+            if (codigo_conta == 0) {
+                return;
+
+            } else if (codigo_conta < 0) {
+                AlinharTextoNaPosicao(8, 24, "                                                 ");
+                AlinharTextoNaPosicao(8, 24, "Digite um numero maior que 0!");
+                getch();
+                AlinharTextoNaPosicao(8, 24, "                                                 ");
+
+                continue;
+                
+            } else if (ConsultarConta(lista_contas, codigo_conta) == NULL) {
+                AlinharTextoNaPosicao(8, 24, "                                                 ");
+                AlinharTextoNaPosicao(8, 24, "Insira uma conta existente!");
+                getch();
+                AlinharTextoNaPosicao(8, 24, "                                                    ");
+
+                continue;
+            }
+
+            break;
         }
 
-        scanf("%d", &codigo_conta);
+        // Obtendo a conta inserida pelo usuário
         bank_account *conta = ConsultarConta(lista_contas, codigo_conta);
 
-        if (conta != NULL) {
-            gotoxy(25, 8);
-            printf("%s", conta->banco);
-            gotoxy(25, 10);
-            printf("%s", conta->agencia);
-            gotoxy(25, 12);
-            printf("%s", conta->numero_conta);
-            gotoxy(25, 14);
-            printf("%s", conta->tipo_conta);
-            gotoxy(25, 16);
-            printf("%lf", conta->vl_saldo);
-            gotoxy(25, 18);
-            printf("%lf", conta->vl_limite);
-            gotoxy(25, 20);
-            printf("%s", conta->status);
-        } else {
-            gotoxy(8, 24);
-            printf("O codigo informado nao existe");
-            getch();
-            continue;
+        gotoxy(26, 8);
+        printf("%s", conta->banco);
+        gotoxy(26, 10);
+        printf("%s", conta->agencia);
+        gotoxy(26, 12);
+        printf("%s", conta->numero_conta);
+        gotoxy(26, 14);
+        printf("%s", conta->tipo_conta);
+        gotoxy(26, 16);
+        printf("%.2lf", conta->vl_saldo);
+        gotoxy(26, 18);
+        printf("%.2lf", conta->vl_limite);
+        gotoxy(26, 20);
+        printf("%s", conta->status);
+
+        while (1) {
+
+            // Verificando a alteração que o usuário deseja alterar
+            while (1) {
+                AlinharTextoNaPosicao(8, 24, "                                                                ");
+                AlinharTextoNaPosicao(8, 24, "Digite o codigo da informacao que deseja alterar: ");
+                scanf("%d", &aux_alteracao);
+
+                if (aux_alteracao == 0) {
+                    return;
+                } else if ((aux_alteracao < 1) || (aux_alteracao > 7 && aux_alteracao != 5)) {
+                    AlinharTextoNaPosicao(8, 24, "                                                ");
+                    AlinharTextoNaPosicao(8, 24, "Digite um valor valido!");
+                    getch();
+                    AlinharTextoNaPosicao(8, 24, "                                               ");
+
+                    continue;
+                } else if (aux_alteracao == 5) {
+                    AlinharTextoNaPosicao(8, 24, "                                              ");
+                    AlinharTextoNaPosicao(8, 24, "O saldo nao pode ser alterado!");
+                    getch();
+                    AlinharTextoNaPosicao(8, 24, "                                               ");
+
+                    continue;
+                }
+
+                break;
+            }
+
+            if (aux_alteracao == 1) {
+                // Validando o novo banco inserido pelo usuário
+                while (1) {
+                    AlinharTextoNaPosicao(26, 8, "                                              ");
+                    gotoxy(26, 8);
+                    
+                    fflush(stdin);
+                    fgets(conta->banco, sizeof(conta->banco), stdin);
+
+                    if (conta->banco[0] == '\n' || strcspn(conta->banco, " \t\n") == strlen(conta->banco)) {
+                        continue;
+                    } 
+
+                    break;
+                }
+
+            } else if (aux_alteracao == 2) {
+                // Validando a nova agencia inserida
+                while (1) {
+                    AlinharTextoNaPosicao(26, 10, "                                                ");
+                    gotoxy(26, 10); 
+                    
+                    fflush(stdin);
+                    fgets(conta->agencia, sizeof(conta->agencia), stdin);
+
+                    if (conta->agencia[0] == '\n' || strcspn(conta->agencia, " \t\n") == strlen(conta->agencia)) {
+                        continue;
+                    } 
+
+                    break;
+                }
+
+            } else if (aux_alteracao == 3) {
+                // Validando o novo numero da conta inserido
+                while (1) {
+                    AlinharTextoNaPosicao(26, 12, "                                            ");
+                    gotoxy(26, 12);
+                    
+                    fflush(stdin);
+                    fgets(conta->numero_conta, sizeof(conta->numero_conta), stdin);
+
+                    if (conta->numero_conta[0] == '\n' || strcspn(conta->numero_conta, " \t\n") == strlen(conta->numero_conta)) {
+                        continue;
+                    } 
+
+                    break;
+                }
+
+            } else if (aux_alteracao == 4) {
+                // Validando o tipo de conta (corrente, poupança e cartão de crédito)
+                while (1) {
+                    gotoxy(26, 14);
+                    printf("                                                     "); 
+                    gotoxy(8, 24);
+                    printf("1=Corrente / 2=Poupanca / 3=Cartao Credito");
+                    gotoxy(26, 14);
+                    scanf("%d", &aux_tipo_conta);
+
+                    gotoxy(8, 24);
+                    printf("                                                    ");
+
+                    switch (aux_tipo_conta) {
+                        case 1:
+                            strcpy(conta->tipo_conta, "CORRENTE");
+                            break;
+                        case 2:
+                            strcpy(conta->tipo_conta, "POUPANCA");
+                            break;
+                        case 3:
+                            strcpy(conta->tipo_conta, "CREDITO");
+                            break;
+                        default:
+                            gotoxy(8, 24);
+                            printf("Digite um valor valido!");
+                            getch();
+                            gotoxy(8, 24);
+                            printf("                                                               ");
+                    }
+                    if(aux_tipo_conta >= 1 && aux_tipo_conta <= 3){
+                        break;
+                    }
+                }
+                gotoxy(28, 14);
+                printf("- %s", conta->tipo_conta); // Exibindo o tipo de conta na frente
+
+            } else if (aux_alteracao == 6) {
+
+                while (1) {
+                    AlinharTextoNaPosicao(26, 18, "                                               ");
+                    gotoxy(26, 18);
+
+                    scanf("%lf", &conta->vl_limite);
+
+                    if (conta->vl_limite < 0) {
+                        AlinharTextoNaPosicao(8, 24, "                                               ");
+                        AlinharTextoNaPosicao(8, 24, "Digite um valor maior que 0!");
+                        getch();
+                        AlinharTextoNaPosicao(8, 24, "                                              ");
+
+                        continue;
+                    }
+
+                    break;
+                }
+            } else if (aux_alteracao == 7) {
+                // Validando o tipo de conta (corrente, poupança e cartão de crédito)
+                while (1) {
+                    gotoxy(26, 20);
+                    printf("                                                   "); 
+                    gotoxy(8, 24);
+                    printf("1=ATIVA / 2=INATIVA");
+                    gotoxy(26, 20);
+                    scanf("%d", &aux_satus_conta);
+
+                    gotoxy(8, 24);
+                    printf("                                                     ");
+
+                    switch (aux_satus_conta) {
+                        case 1:
+                            strcpy(conta->status, "ATIVA");
+                            break;
+                        case 2:
+                            strcpy(conta->status, "INATIVA");
+                            break;
+                        default:
+                            gotoxy(8, 24);
+                            printf("Digite um valor valido!");
+                            getch();
+                            gotoxy(8, 24);
+                            printf("                                                            ");
+                    }
+                    if(aux_satus_conta >= 1 && aux_satus_conta <= 3){
+                        break;
+                    }
+                }
+                gotoxy(28, 20);
+                printf("- %s", conta->status); // Exibindo o tipo de conta na frente
+            }
+            
+            while (1) {
+                AlinharTextoNaPosicao(8, 24, "                                                         ");
+                AlinharTextoNaPosicao(8, 24, "[1] Editar outra informacao [2] Voltar: ");
+
+                scanf("%d", &editar_outra_informacao);
+
+                if (editar_outra_informacao != 1 && editar_outra_informacao != 2) {
+                    AlinharTextoNaPosicao(8, 24, "                                                         ");
+                    AlinharTextoNaPosicao(8, 24, "Digite uma opcao valida!");
+                    getch();
+                    AlinharTextoNaPosicao(8, 24, "                                                    ");
+
+                    continue;
+                }
+
+                break;
+            }
+
+            if (editar_outra_informacao == 1) {
+                continue;
+            }
+
+            break;
         }
 
         while (1) {
-            AlinharTextoNaPosicao(8, 24, "Digite uma opcao para alterar: ");
-            scanf("%d", &opcao_alteracao);
+            AlinharTextoNaPosicao(8, 24, "                                                       ");
+            AlinharTextoNaPosicao(8, 24, "[1] Editar outra conta [2] Voltar: ");
 
-            switch (opcao_alteracao) {
-                case 1: // Alterar Banco
-                    AlinharTextoNaPosicao(25, 8, "                               ");
-                    gotoxy(25, 8);
-                    fflush(stdin);
-                    fgets(novo_banco, sizeof(novo_banco), stdin);
+            scanf("%d", &editar_outra_conta);
 
-                    AlterarInformacao(conta, 1, novo_banco);
-                    break;
-
-                case 2: // Alterar Agência
-                    AlinharTextoNaPosicao(25, 10, "                               ");
-                    gotoxy(25, 10);
-                    fflush(stdin);
-                    fgets(nova_agencia, sizeof(nova_agencia), stdin);
-
-                    AlterarInformacao(conta, 2, nova_agencia);
-                    break;
-
-                case 3: // Alterar Número da Conta
-                    AlinharTextoNaPosicao(25, 12, "                               ");
-                    gotoxy(25, 12);
-                    fflush(stdin);
-                    fgets(novo_numero_conta, sizeof(novo_numero_conta), stdin);
-
-                    AlterarInformacao(conta, 3, novo_numero_conta);
-                    break;
-
-                case 4: // Alterar Tipo da Conta
-                    AlinharTextoNaPosicao(25, 14, "                               ");
-                    gotoxy(25, 14);
-                    fflush(stdin);
-                    fgets(novo_tipo_conta, sizeof(novo_tipo_conta), stdin);
-
-                    AlterarInformacao(conta, 4, novo_tipo_conta);
-                    break;
-
-                case 5: // Tentativa de Alterar Saldo
-                    AlinharTextoNaPosicao(8, 24, "Alteracao de saldo nao permitida!");
-                    getch();
-                    break;
-
-                case 6: // Alterar Limite
-                    AlinharTextoNaPosicao(25, 18, "                               ");
-                    gotoxy(25, 18);
-                    scanf("%lf", &novo_limite);
-
-                    AlterarInformacao(conta, 6, &novo_limite);
-                    break;
-
-                case 7: // Alterar Status
-                    AlinharTextoNaPosicao(25, 20, "                               ");
-                    gotoxy(25, 20);
-                    fflush(stdin);
-                    fgets(novo_status, sizeof(novo_status), stdin);
-
-                    AlterarInformacao(conta, 7, novo_status);
-                    break;
-
-                default: // Opção inválida
-                    AlinharTextoNaPosicao(8, 24, "Opcao invalida! Tente novamente.");
-                    getch();
-                    continue;
-            }
-
-            AlinharTextoNaPosicao(8, 24, "                                         ");
-            AlinharTextoNaPosicao(8, 24, "Informacao alterada com sucesso!");
-            getch();
-            
-            AlinharTextoNaPosicao(8, 24, "[1] Alterar outra informacao [2] Voltar");
-            scanf("%d", &continuar_alteracao);
-
-            if (continuar_alteracao != 1 && continuar_alteracao != 2) {
-                gotoxy(8,24);
-                printf("                                                       ");
-                gotoxy(8,24);
-                printf("Digite uma opcao valida");
+            if (editar_outra_conta != 1 && editar_outra_conta != 2) {
+                AlinharTextoNaPosicao(8, 24, "                                               ");
+                AlinharTextoNaPosicao(8, 24, "Digite uma opcao valida!");
                 getch();
-                gotoxy(8,24);
-                printf("                                                       ");
-            } else if (continuar_alteracao == 2) {
-                break;
-            }
-        }
+                AlinharTextoNaPosicao(8, 24, "                                                ");
 
-        gotoxy(8,24);
-        printf("[1] Consultar Outra Conta [2] Voltar ao Menu Anterior: ");
-        scanf("%d", &continuar_consulta);
-        
-        if (continuar_consulta != 1 && continuar_consulta != 2) {
-            gotoxy(8,24);
-            printf("                                                       ");
-            gotoxy(8,24);
-            printf("Digite uma opcao valida");
-            getch();
-            gotoxy(8,24);
-            printf("                                                       ");
-        } else if (continuar_consulta == 2) {
+                continue;
+            }
+
             break;
         }
+
+        if (editar_outra_conta == 1) {
+            continue;
+        }
+
+        break;
     }
 }

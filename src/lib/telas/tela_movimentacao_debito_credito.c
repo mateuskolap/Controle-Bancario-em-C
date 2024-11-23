@@ -5,6 +5,7 @@
 
 void TelaMovimentacaoDebitoCredito(LinkedList *lista_contas, List *lista_transacoes) {
 
+    /*
     int aux = 0;
     int confirma = 0;
     int confirma2 = 0;
@@ -201,4 +202,7 @@ void TelaMovimentacaoDebitoCredito(LinkedList *lista_contas, List *lista_transac
             break;
         }
     }
+    */
+
+   return;
 }

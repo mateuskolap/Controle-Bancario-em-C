@@ -17,7 +17,7 @@ void TelaCadastrarConta(LinkedList *lista_contas, int tipo_cadastro) {
 
         while (1) {
             gotoxy(8, 24);
-            printf("digite 0 para sair:");
+            printf("Digite 0 para sair:");
             gotoxy(26, 6);
             printf("                                       ");
             gotoxy(26, 6);
@@ -26,16 +26,16 @@ void TelaCadastrarConta(LinkedList *lista_contas, int tipo_cadastro) {
             scanf("%d", &conta->codigo_conta);
 
             if (conta->codigo_conta < 0) {
-                AlinharTextoNaPosicao(8 ,24, "Digite um codigo maior que 0!");
+                AlinharTextoNaPosicao(8, 24, "Digite um codigo maior que 0!");
                 getch();
                 gotoxy(8, 24);
                 printf("                                                   ");
             } else if (ConsultarConta(lista_contas, conta->codigo_conta) != NULL) {
-                AlinharTextoNaPosicao(8 ,24, "Codigo ja existente, digite outro!");
+                AlinharTextoNaPosicao(8, 24, "Codigo ja existente, digite outro!");
                 getch();
                 gotoxy(8, 24);
                 printf("                                                        ");
-            } else if (conta ->codigo_conta == 0 ){
+            } else if (conta->codigo_conta == 0 ){
                 return;
             }else{
                 break;
@@ -51,30 +51,38 @@ void TelaCadastrarConta(LinkedList *lista_contas, int tipo_cadastro) {
             fflush(stdin);
             fgets(conta->banco, sizeof(conta->banco), stdin);   
             
-            if(conta->banco[0] != '\n'){
-                break;
-            }
+            if (conta->banco[0] == '\n' || strcspn(conta->banco, " \t\n") == strlen(conta->banco)) {
+                continue;
+            } 
+
+            break;
 
         }
+
         while (1){
         
             gotoxy(26, 10);
             fflush(stdin);
             fgets(conta->agencia, sizeof(conta->agencia), stdin);
             
-            if(conta->agencia[0] != '\n'){
-                break;
-            }
+            if (conta->agencia[0] == '\n' || strcspn(conta->agencia, " \t\n") == strlen(conta->agencia)) {
+                continue;
+            } 
+
+            break;
         }
+
         while (1){
         
             gotoxy(26, 12);
             fflush(stdin);
             fgets(conta->numero_conta, sizeof(conta->numero_conta), stdin);   
             
-            if(conta->numero_conta[0] != '\n'){
-                break;
-            }
+            if (conta->numero_conta[0] == '\n' || strcspn(conta->numero_conta, " \t\n") == strlen(conta->numero_conta)) {
+                continue;
+            } 
+
+            break;
         }
         
         while (1) {

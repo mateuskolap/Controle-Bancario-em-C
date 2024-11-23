@@ -45,7 +45,7 @@ void TelaRemoverConta(LinkedList *lista_contas, const int tipo_exclusao) {
 
         if (conta->num_transacoes > 0){
             gotoxy(8, 24);
-            printf("conta com transações, impossivel excluir!");
+            printf("Conta com transações, impossivel excluir!");
             getch();
             return;
         }
@@ -90,15 +90,16 @@ void TelaRemoverConta(LinkedList *lista_contas, const int tipo_exclusao) {
                 } else {
                     RemoverContaEm(lista_contas, posicao_conta);
                 }
+
+                AlinharTextoNaPosicao(8, 24, "Conta excluida com sucesso!");
+                getch();
+                AlinharTextoNaPosicao(8, 24, "                                               ");
+
                 break;
             } else if (confirma_exclusao == 2) {
                 break;
             }
         }
-
-        AlinharTextoNaPosicao(8, 24, "Conta excluida com sucesso!");
-        getch();
-        AlinharTextoNaPosicao(8, 24, "                           ");
 
         gotoxy(8,24);
         printf("[1] Excluir Outra Conta [2] Voltar ao Menu Anterior: ");
@@ -106,12 +107,12 @@ void TelaRemoverConta(LinkedList *lista_contas, const int tipo_exclusao) {
 
         if (continuar_exclusao != 1 && continuar_exclusao != 2) {
             gotoxy(8,24);
-            printf("                                                       ");
+            printf("                                                        ");
             gotoxy(8,24);
             printf("Digite uma opcao valida");
             getch();
             gotoxy(8,24);
-            printf("                                                       ");
+            printf("                                                         ");
         } else if (continuar_exclusao == 2) {
             break;
         }

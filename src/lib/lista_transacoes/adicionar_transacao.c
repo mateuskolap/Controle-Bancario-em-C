@@ -13,7 +13,7 @@
 #include "../../include/funcoes.h"
 #include <string.h>
 
-void AdicionarTransacao(List *lista_transacoes, LinkedList *lista_contas, bank_transaction *content) {
+void AdicionarTransacao(List *lista_transacoes, LinkedList *lista_contas, bank_transaction *content, const int tipo_transacao) {
     // Cria um novo nó com o conteúdo desejado
     DNode *p = CriarTransacao(content);
 
@@ -35,9 +35,9 @@ void AdicionarTransacao(List *lista_transacoes, LinkedList *lista_contas, bank_t
 
     conta->num_transacoes++;
 
-    if (strcmp(p->content->tp_movimentacao, "CREDITO") == 0) {
+    if (tipo_transacao == 1) {
         conta->vl_saldo += p->content->vl_movimento;
-    } else if (strcmp(p->content->tp_movimentacao, "DEBITO") == 0) {
+    } else if (tipo_transacao == 2) {
         conta->vl_saldo -= p->content->vl_movimento;
     }
 }

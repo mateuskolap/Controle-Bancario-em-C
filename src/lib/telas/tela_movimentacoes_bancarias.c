@@ -28,12 +28,12 @@ void TelaMovimentacoesBancarias(LinkedList *lista_contas, List *lista_transacoes
 
         case 2:
 
-            // TelaTransferenciaEntreContasBancarias(lista_contas, lista_transacoes);
+            TelaTransferenciaEntreContas(lista_contas, lista_transacoes);
             break;
 
         case 3:
 
-            // TelaConsultaMovimentacoesBancarias(lista_contas, lista_transacoes);
+            TelaConsultarTransacoes(lista_contas, lista_transacoes);
             break;
 
         case 4:
