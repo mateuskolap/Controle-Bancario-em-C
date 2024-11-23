@@ -202,7 +202,7 @@ void TelaTransferenciaEntreContas(LinkedList *lista_contas, List *lista_transaco
                 if (InverterData(data) > InverterData(aux_maior_data)) {
                     AlinharTextoNaPosicao(8, 24, "                                                    ");
                     gotoxy(8, 24);
-                    printf("Digite uma data anterior ou igual a %s", aux_maior_data);
+                    printf("Digite uma data posterior ou igual a %s", aux_maior_data);
                     getch();
                     AlinharTextoNaPosicao(8, 24, "                                                    ");
 

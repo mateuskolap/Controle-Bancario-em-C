@@ -5,10 +5,10 @@
 
 void TelaMovimentacaoDebitoCredito(LinkedList *lista_contas, List *lista_transacoes) {
 
-    /*
     int aux = 0;
     int confirma = 0;
     int confirma2 = 0;
+    char aux_maior_data[12];
 
     while(1) {
         
@@ -27,29 +27,30 @@ void TelaMovimentacaoDebitoCredito(LinkedList *lista_contas, List *lista_transac
 
             scanf("%d", &transacao->codigo_conta);
 
-            if (transacao->codigo_conta < 0) {
+            if (transacao->codigo_conta == 0) {
+                free(transacao);
+                transacao = NULL;
+                return;
 
-                AlinharTextoNaPosicao(8 ,24, "Digite um codigo maior que 0!");
+            } else if (transacao->codigo_conta < 0) {
+                AlinharTextoNaPosicao(8, 24, "                                                 ");
+                AlinharTextoNaPosicao(8, 24, "Digite um numero maior que 0!");
                 getch();
-                gotoxy(8, 24);
-                printf("                                                   ");
-                
+                AlinharTextoNaPosicao(8, 24, "                                                 ");
+
                 continue;
-
-            } else if (ConsultarConta(lista_contas, transacao->codigo_conta) == NULL) {
-             
-                AlinharTextoNaPosicao(8 ,24, "Codigo nao existente, digite outro!");
-                getch();
-                gotoxy(8, 24);
-                printf("                                                        ");
                 
-                continue; 
-            
-            } 
+            } else if (ConsultarConta(lista_contas, transacao->codigo_conta) == NULL) {
+                AlinharTextoNaPosicao(8, 24, "                                                 ");
+                AlinharTextoNaPosicao(8, 24, "Insira uma conta existente!");
+                getch();
+                AlinharTextoNaPosicao(8, 24, "                                                    ");
+
+                continue;
+            }
 
             break;
-
-        }   
+        }
         
         bank_account *conta = ConsultarConta(lista_contas, transacao->codigo_conta);
 
@@ -71,44 +72,57 @@ void TelaMovimentacaoDebitoCredito(LinkedList *lista_contas, List *lista_transac
         while(1){
 
             gotoxy(29,16);
-            printf("                      ");
+            printf("                                          ");
             gotoxy(29,16);
             fflush(stdin);
             fgets(transacao->data_movimento, sizeof(transacao->data_movimento), stdin);
             
-            if(transacao->data_movimento[0] != '\n'){
-                if(ValidarData(transacao->data_movimento)){
-                    break;
-                }else{
+            if (transacao->data_movimento[0] == '\n' || strcspn(transacao->data_movimento, " \t\n") == strlen(transacao->data_movimento)) {
+                continue;
+            } else if (ValidarData(transacao->data_movimento) == false) {
+                AlinharTextoNaPosicao(8, 24, "                                                    ");
+                AlinharTextoNaPosicao(8, 24, "Digite uma data valida!");
+                getch();
+                AlinharTextoNaPosicao(8, 24, "                                                    ");
+                
+                continue;
+            } else {
+                strcpy(aux_maior_data[12], VerificarUltimaData(lista_transacoes, transacao->codigo_conta));
+                
+                if (InverterData(transacao->data_movimento) > InverterData(aux_maior_data)) {
+                    AlinharTextoNaPosicao(8, 24, "                                                    ");
                     gotoxy(8, 24);
-                    printf("digite uma data valida!");
+                    printf("Digite uma data posterior ou igual a %s", aux_maior_data);
                     getch();
-                    gotoxy(8,24);
-                    printf("                                          ");
+                    AlinharTextoNaPosicao(8, 24, "                                                    ");
+
+                    continue;
                 }
+
+                break;
+
             }
         }
 
         while (1) {
             gotoxy(8,24);
-            printf("[1]debito [2]credito:");
+            printf("[1] Debito [2] Credito: ");
             gotoxy(29,17);
             scanf("%d", &aux);
 
-            switch (aux)
-            {
-            case 1:
-                strcpy(transacao->tp_movimentacao, "DEBITO");
-                break;
-            case 2:
-                strcpy(transacao->tp_movimentacao, "CREDITO");
-                break;
-            default:
-                gotoxy(8, 24);
-                printf("Digite um valor valido!");
-                getch();
-                gotoxy(8, 24);
-                printf("                                                      ");
+            switch (aux) {
+                case 1:
+                    strcpy(transacao->tp_movimentacao, "DEBITO");
+                    break;
+                case 2:
+                    strcpy(transacao->tp_movimentacao, "CREDITO");
+                    break;
+                default:
+                    gotoxy(8, 24);
+                    printf("Digite um valor valido!");
+                    getch();
+                    gotoxy(8, 24);
+                    printf("                                                      ");
             }
 
             if (aux >= 1 && aux <=2) {
@@ -125,7 +139,7 @@ void TelaMovimentacaoDebitoCredito(LinkedList *lista_contas, List *lista_transac
             fflush(stdin);
             fgets(transacao->favorecido, sizeof(transacao->favorecido), stdin);   
             
-            if(transacao->favorecido[0] != '\n'){
+            if (transacao->favorecido[0] == '\n' || strcspn(transacao->favorecido, " \t\n") == strlen(transacao->favorecido)) {
                 break;
             }
         }
@@ -140,7 +154,7 @@ void TelaMovimentacaoDebitoCredito(LinkedList *lista_contas, List *lista_transac
 
             if(transacao->vl_movimento <= 0 || transacao->vl_movimento > vl_limite_total){
                 gotoxy(8, 24);
-                printf("Digite um valor dentro do limite!");
+                printf("Digite um valor dentro do limite e maior que 0!");
                 getch();
                 gotoxy(8, 24);
                 printf("                                 ");
@@ -202,7 +216,6 @@ void TelaMovimentacaoDebitoCredito(LinkedList *lista_contas, List *lista_transac
             break;
         }
     }
-    */
 
    return;
 }
