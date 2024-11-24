@@ -13,6 +13,7 @@ void TelaTransferenciaEntreContas(LinkedList *lista_contas, List *lista_transaco
 
         Moldura();
         CriarTitulo("TRANSFERENCIA ENTRE CONTAS");
+        CriarTitulo("INSERIR TRANSFERENCIA BANCARIA");
         
         for (int i = 8; i < 18; i++) {
             EscreverNoCentro(i, "|");
@@ -199,7 +200,7 @@ void TelaTransferenciaEntreContas(LinkedList *lista_contas, List *lista_transaco
                     strcpy(aux_maior_data, ultima_data_destino);
                 }
                 
-                if (InverterData(data) > InverterData(aux_maior_data)) {
+                if (InverterData(data) < InverterData(aux_maior_data)) {
                     AlinharTextoNaPosicao(8, 24, "                                                    ");
                     gotoxy(8, 24);
                     printf("Digite uma data posterior ou igual a %s", aux_maior_data);
@@ -213,6 +214,11 @@ void TelaTransferenciaEntreContas(LinkedList *lista_contas, List *lista_transaco
 
             }
         }
+
+        gotoxy(21, 16);
+        printf("%.2lf", conta_origem->vl_saldo - valor_transferencia);
+        gotoxy(79, 16);
+        printf("%.2lf", conta_destino->vl_saldo - valor_transferencia);
 
         while(1) {
             AlinharTextoNaPosicao(8, 24, "                                                    ");

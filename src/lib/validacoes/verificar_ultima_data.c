@@ -11,5 +11,5 @@ char *VerificarUltimaData(List *lista_transacoes, const int codigo_conta) {
         current = current->previous;
     }
 
-    return "31/12/3000";
+    return "0";
 }
