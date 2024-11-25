@@ -11,11 +11,12 @@ void TelaConsultaContas(LinkedList *lista_contas) {
         Moldura();
         CriarTitulo("TELA DE CONSULTA DE CONTAS");
 
-        AlinharTextoNaPosicao(4, 9, "1. Consulta Geral");
-        AlinharTextoNaPosicao(4, 11, "2. Consulta por Codigo");
-        AlinharTextoNaPosicao(4, 13, "3. Consulta por Ordem de Codigo");
-        AlinharTextoNaPosicao(4, 15, "4. Consulta por Ordem Alfabetica");
-        AlinharTextoNaPosicao(4, 17, "5. Retorna ao Menu Anterior");
+        AlinharTextoNaPosicao(4, 8, "1. Consulta Geral");
+        AlinharTextoNaPosicao(4, 10, "2. Consulta por Codigo");
+        AlinharTextoNaPosicao(4, 12, "3. Consulta por Ordem de Codigo");
+        AlinharTextoNaPosicao(4, 14, "4. Consulta por Ordem Alfabetica");
+        AlinharTextoNaPosicao(4, 16, "5. Consulta Contas Inativas");
+        AlinharTextoNaPosicao(4, 18, "6. Retorna ao Menu Anterior");
 
         gotoxy(8, 24);
         scanf("%d", &opcao);
@@ -34,6 +35,9 @@ void TelaConsultaContas(LinkedList *lista_contas) {
                 TelaConsultarContaPorOrdem(lista_contas, 1);
                 break;
             case 5:
+                TelaConsultarContasInativas(lista_contas);
+                break;
+            case 6:
                 return;
             default:
                 AlinharTextoNaPosicao(8, 24, "Digite uma opcao valida!");

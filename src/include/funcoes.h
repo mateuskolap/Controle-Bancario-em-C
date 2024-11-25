@@ -94,6 +94,7 @@ void TelaConsultaContas(LinkedList *lista_contas);
 void TelaConsultaGeralContas(LinkedList *lista_contas);
 void TelaConsultarContaCodigo(LinkedList *lista_contas);
 void TelaConsultarContaPorOrdem(LinkedList *lista_contas, const int tipo_ordenacao);
+void TelaConsultarContasInativas(LinkedList *lista_contas);
 void TelaRemoverConta(LinkedList *lista_contas, const int tipo_exclusao);
 void TelaAlteracaoConta(LinkedList *lista_contas);
 void EscreverNoCentro(int y, char texto[]);
