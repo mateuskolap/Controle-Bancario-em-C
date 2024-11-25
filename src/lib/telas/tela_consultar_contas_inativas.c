@@ -45,7 +45,7 @@ void TelaConsultarContasInativas(LinkedList *lista_contas) {
         // Itera pelos elementos da lista e exibe os registros da página atual
         SNode *current = lista_contas->head;
         for (int i = 0; current != NULL && i < inicio + linhas_pagina; i++) {
-            if (strcmp(current->content->status, "INATIVA")) {
+            if (strcmp(current->content->status, "INATIVA") == 0) {
                 if (i >= inicio) {
                     contagem++;
 

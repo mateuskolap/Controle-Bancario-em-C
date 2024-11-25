@@ -78,7 +78,7 @@ void TelaTransferenciaEntreContas(LinkedList *lista_contas, List *lista_transaco
         bank_account *conta_origem = ConsultarConta(lista_contas, codigo_conta_origem);
         double saldo_limite_conta_origem = conta_origem->vl_saldo + conta_origem->vl_limite;
 
-        if (strcmp(conta_origem->status, "INATIVO") == 0) {
+        if (strcmp(conta_origem->status, "INATIVA") == 0) {
             AlinharTextoNaPosicao(8, 24, "                                                 ");
             AlinharTextoNaPosicao(8, 24, "A conta esta inativa!");
             getch();
@@ -142,7 +142,7 @@ void TelaTransferenciaEntreContas(LinkedList *lista_contas, List *lista_transaco
         bank_account *conta_destino = ConsultarConta(lista_contas, codigo_conta_destino);
         double saldo_limite_conta_destino = conta_destino->vl_saldo + conta_destino->vl_limite;
 
-        if (strcmp(conta_destino->status, "INATIVO") == 0) {
+        if (strcmp(conta_destino->status, "INATIVA") == 0) {
             AlinharTextoNaPosicao(8, 24, "                                                 ");
             AlinharTextoNaPosicao(8, 24, "A conta esta inativa!");
             getch();
@@ -236,7 +236,7 @@ void TelaTransferenciaEntreContas(LinkedList *lista_contas, List *lista_transaco
         gotoxy(21, 16);
         printf("%.2lf", conta_origem->vl_saldo - valor_transferencia);
         gotoxy(79, 16);
-        printf("%.2lf", conta_destino->vl_saldo - valor_transferencia);
+        printf("%.2lf", conta_destino->vl_saldo + valor_transferencia);
 
         while(1) {
             AlinharTextoNaPosicao(8, 24, "                                                    ");

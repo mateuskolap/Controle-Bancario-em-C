@@ -115,7 +115,7 @@ void TelaMovimentacaoDebitoCredito(LinkedList *lista_contas, List *lista_transac
 
         while (1) {
             gotoxy(8,24);
-            printf("[1] Debito [2] Credito: ");
+            printf("[1] CREDITO [2] DEBITO: ");
             AlinharTextoNaPosicao(29, 17, "                             ");
             gotoxy(29,17);
             scanf("%d", &aux);
@@ -140,6 +140,7 @@ void TelaMovimentacaoDebitoCredito(LinkedList *lista_contas, List *lista_transac
             }
             
         }
+        AlinharTextoNaPosicao(8, 24, "                                                    ");
         gotoxy(30,17);
         printf(" - %s", transacao->tp_movimentacao);
 
