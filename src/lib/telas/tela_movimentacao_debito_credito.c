@@ -210,7 +210,8 @@ void TelaMovimentacaoDebitoCredito(LinkedList *lista_contas, List *lista_transac
                 gotoxy(8, 24);
                 printf("                       ");
             }else if(confirma == 2){
-                ExcluirTransacao(&transacao);
+                free(transacao);
+                transacao = NULL;
                 break;
             } else {
                 if (aux == 1) {
