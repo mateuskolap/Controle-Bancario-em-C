@@ -154,6 +154,8 @@ void TelaAlteracaoConta(LinkedList *lista_contas) {
                     gotoxy(26, 14);
                     printf("                                                     "); 
                     gotoxy(8, 24);
+                    printf("                                           ");
+                    gotoxy(8, 24);
                     printf("1=Corrente / 2=Poupanca / 3=Cartao Credito");
                     gotoxy(26, 14);
                     scanf("%d", &aux_tipo_conta);
@@ -209,6 +211,8 @@ void TelaAlteracaoConta(LinkedList *lista_contas) {
                 while (1) {
                     gotoxy(26, 20);
                     printf("                                                   "); 
+                    gotoxy(8, 24);
+                    printf("                                                               ");
                     gotoxy(8, 24);
                     printf("1=ATIVA / 2=INATIVA");
                     gotoxy(26, 20);

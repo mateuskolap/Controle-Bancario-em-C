@@ -54,6 +54,15 @@ void TelaMovimentacaoDebitoCredito(LinkedList *lista_contas, List *lista_transac
         
         bank_account *conta = ConsultarConta(lista_contas, transacao->codigo_conta);
 
+        if (strcmp(conta->status, "INATIVA") == 0) {
+            AlinharTextoNaPosicao(8, 24, "                                                 ");
+            AlinharTextoNaPosicao(8, 24, "A conta esta inativa!");
+            getch();
+            AlinharTextoNaPosicao(8, 24, "                                                    ");
+
+            return;
+        }
+
         gotoxy(29, 8);
         printf("%s", conta->banco);
         gotoxy(29, 9);
