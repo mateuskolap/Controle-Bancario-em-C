@@ -197,6 +197,9 @@ void TelaCadastrarConta(LinkedList *lista_contas, int tipo_cadastro) {
                 getch();
                 gotoxy(8, 24);
                 printf("                       ");
+            } else if(confirma == 2){
+                ExcluirConta(&conta);
+                break;
             } else {
                 break;
             }
