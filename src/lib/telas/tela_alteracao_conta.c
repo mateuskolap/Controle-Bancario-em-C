@@ -21,6 +21,7 @@
  */
 void TelaAlteracaoConta(LinkedList *lista_contas) {
 
+    // Variáveis auxiliares que serão utilizadas ao decorrer do código
     int aux_alteracao = 0, codigo_conta = 0, aux_tipo_conta = 0, aux_satus_conta = 0, editar_outra_informacao = 0, editar_outra_conta = 0;
     
     while (1) {
@@ -41,6 +42,7 @@ void TelaAlteracaoConta(LinkedList *lista_contas) {
 
             scanf("%d", &codigo_conta);
 
+            // Validando o código da conta digitado pelo usuário
             if (codigo_conta == 0) {
                 return;
 
@@ -67,6 +69,7 @@ void TelaAlteracaoConta(LinkedList *lista_contas) {
         // Obtendo a conta inserida pelo usuário
         bank_account *conta = ConsultarConta(lista_contas, codigo_conta);
 
+        // Edibindo as informações das contas
         gotoxy(26, 8);
         printf("%s", conta->banco);
         gotoxy(26, 10);
@@ -254,6 +257,7 @@ void TelaAlteracaoConta(LinkedList *lista_contas) {
                 printf("- %s", conta->status); // Exibindo o tipo de conta na frente
             }
             
+            // Validando a escolha do usuário
             while (1) {
                 AlinharTextoNaPosicao(8, 24, "                                                         ");
                 AlinharTextoNaPosicao(8, 24, "[1] Editar outra informacao [2] Voltar: ");
@@ -279,6 +283,7 @@ void TelaAlteracaoConta(LinkedList *lista_contas) {
             break;
         }
 
+        // Validando a escolha do usuário
         while (1) {
             AlinharTextoNaPosicao(8, 24, "                                                       ");
             AlinharTextoNaPosicao(8, 24, "[1] Editar outra conta [2] Voltar: ");

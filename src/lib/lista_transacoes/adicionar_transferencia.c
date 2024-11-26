@@ -14,6 +14,21 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/**
+ * @brief Adiciona uma transferência entre duas contas.abort
+ * 
+ * A função insere duas novas transações ao final da lista de transacões.
+ * 
+ * Utiliza a lógica já implementada pela função (`AdicionarTransacao`) para adicionar os nós ao final da lista.
+ * 
+ * @param lista_transacoes Ponteiro para a lista de transacões (`List`).
+ * @param lista_contas Ponteiro para a lista de contas (`LinkedList`).
+ * @param conta_origem Ponteiro para a estrutura da conta de origem (`bank_account`).
+ * @param conta_destino Ponteiro para a estrutura da conta destino (`bank_transaction`).
+ * @param valor Constante que definirá o valor da transacao.
+ * @param data Data em que ocorreu a transação.
+ * 
+ */
 void AdicionarTransferencia(List *lista_transacoes, LinkedList *lista_contas, bank_account *conta_origem, bank_account *conta_destino, const double valor, char data[]) {
     // Transação de origem
     bank_transaction *transacao_origem = (bank_transaction *) calloc(1, sizeof(bank_transaction));
