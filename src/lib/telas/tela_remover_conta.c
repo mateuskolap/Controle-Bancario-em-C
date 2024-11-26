@@ -41,10 +41,10 @@ void TelaRemoverConta(LinkedList *lista_contas, const int tipo_exclusao) {
                 scanf("%d", &posicao_conta);
 
                 if (posicao_conta < 0 || posicao_conta > lista_contas->size) {
-                    AlinharTextoNaPosicao(8, 24, "                  ");
+                    AlinharTextoNaPosicao(8, 24, "                                     ");
                     AlinharTextoNaPosicao(8, 24, "Digite uma posicao valida");
                     getch();
-                    AlinharTextoNaPosicao(8, 24, "                         ");
+                    AlinharTextoNaPosicao(8, 24, "                                      ");
                 } else {
                     break;
                 }

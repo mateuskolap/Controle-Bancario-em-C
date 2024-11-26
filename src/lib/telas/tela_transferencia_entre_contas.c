@@ -24,7 +24,7 @@ void TelaTransferenciaEntreContas(LinkedList *lista_contas, List *lista_transaco
 
         Moldura();
         CriarTitulo("TRANSFERENCIA ENTRE CONTAS");
-        CriarTitulo("INSERIR TRANSFERENCIA BANCARIA");
+
         
         for (int i = 8; i < 18; i++) {
             EscreverNoCentro(i, "|");
